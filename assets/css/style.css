@@ -390,7 +390,7 @@ img {
   width: auto;
   height: auto;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 28px;
 }
 
 .card-large-info {
