@@ -289,7 +289,7 @@ img {
 .cards-gallery {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 20px;
   padding: 12px;
   padding-bottom: 40px;
   align-content: start;
@@ -340,7 +340,6 @@ img {
 
 .card-item img {
   width: 100%;
-  aspect-ratio: 2 / 3;
   object-fit: contain;
   display: block;
   max-width: none;
