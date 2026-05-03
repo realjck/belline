@@ -75,5 +75,3 @@ const UI_TEXTS = {
     'info-text': 'Belline Oracle is a companion app to explore the 53 cards of the Belline Oracle. Each card carries particular significance, ideal for consultation and meditation.'
   }
 };
-
-export default UI_TEXTS;
