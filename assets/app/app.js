@@ -48,6 +48,8 @@ function cacheDOM() {
   dom.cardLargeImage = document.getElementById('card-large-image');
   dom.cardLargeTitle = document.getElementById('card-large-title');
   dom.cardLargeNumber = document.getElementById('card-large-number');
+  dom.cardLargeContainer = document.querySelector('.card-large-container');
+  dom.cardLargeInfoEl = document.querySelector('.card-large-info');
   dom.arrPrev = document.getElementById('arr-prev');
   dom.arrNext = document.getElementById('arr-next');
   dom.btCardBack = document.getElementById('bt-card-back');
@@ -250,7 +252,7 @@ function goTo(screenIndex) {
     // After animation, remove leaving class
     setTimeout(() => {
       fromScreen.classList.remove('leaving');
-    }, 400);
+    }, 350);
   }
 
   // Enter screen: add active
@@ -259,17 +261,41 @@ function goTo(screenIndex) {
   currentScreen = screenIndex;
 }
 
-function prevCard() {
-  currentCardId = currentCardId === 0 ? 52 : currentCardId - 1;
-  renderCardLarge();
-  playSound('click');
+function changeCardId(direction) {
+  if (direction === 'next') {
+    currentCardId = currentCardId === 52 ? 0 : currentCardId + 1;
+  } else {
+    currentCardId = currentCardId === 0 ? 52 : currentCardId - 1;
+  }
 }
 
-function nextCard() {
-  currentCardId = currentCardId === 52 ? 0 : currentCardId + 1;
-  renderCardLarge();
+function navigateCard(direction) {
   playSound('click');
+
+  if (currentScreen !== 2) {
+    changeCardId(direction);
+    renderCardLarge();
+    if (currentScreen === 3) renderCardText();
+    return;
+  }
+
+  const els = [dom.cardLargeContainer, dom.cardLargeInfoEl];
+  const exitClass  = direction === 'next' ? 'card-exit-left'   : 'card-exit-right';
+  const enterClass = direction === 'next' ? 'card-enter-right' : 'card-enter-left';
+
+  els.forEach(el => el.classList.add(exitClass));
+
+  setTimeout(() => {
+    changeCardId(direction);
+    els.forEach(el => { el.classList.remove(exitClass); el.classList.add(enterClass); });
+    renderCardLarge();
+    dom.cardLargeContainer.offsetHeight; // force reflow
+    els.forEach(el => el.classList.remove(enterClass));
+  }, 250);
 }
+
+function prevCard() { navigateCard('prev'); }
+function nextCard()  { navigateCard('next'); }
 
 // ──── RENDERING ────
 
@@ -431,8 +457,8 @@ function setupEventListeners() {
     goTo(2);
     playSound('back');
   });
-  dom.arrPrevText.addEventListener('click', () => { prevCard(); playSound('back'); });
-  dom.arrNextText.addEventListener('click', () => { nextCard(); playSound('click'); });
+  dom.arrPrevText.addEventListener('click', prevCard);
+  dom.arrNextText.addEventListener('click', nextCard);
 
   // Settings modal
   dom.settingsLangEn.addEventListener('click', () => switchLang('en'));

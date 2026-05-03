@@ -206,8 +206,7 @@ img {
   opacity: 0;
   transform: translateX(30px);
   pointer-events: none;
-  transition: opacity var(--transition-duration) var(--transition-easing),
-              transform var(--transition-duration) var(--transition-easing);
+  transition: opacity .35s ease, transform .35s ease;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -441,6 +440,14 @@ img {
   margin: 0 auto;
   width: 100%;
 }
+
+.card-large-container,
+.card-large-info { transition: opacity .25s ease, transform .25s ease; }
+
+.card-exit-left  { opacity: 0 !important; transform: translateX(-50px) !important; }
+.card-exit-right { opacity: 0 !important; transform: translateX(50px) !important; }
+.card-enter-right { opacity: 0; transform: translateX(50px); transition: none !important; }
+.card-enter-left  { opacity: 0; transform: translateX(-50px); transition: none !important; }
 
 .card-large-title {
   font-size: 24px;
