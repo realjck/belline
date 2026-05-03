@@ -30,7 +30,7 @@
 
 :root {
   /* Light Theme */
-  --color-bg: #dccbaf;
+  --color-bg: #eee5d7;
   --color-text: #333;
   --color-border: #b8a89a;
 
@@ -55,7 +55,7 @@
 }
 
 :root.light {
-  --color-bg: #dccbaf;
+  --color-bg: #eee5d7;
   --color-text: #333;
   --color-border: #b8a89a;
 }
