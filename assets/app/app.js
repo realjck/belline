@@ -43,7 +43,6 @@ function cacheDOM() {
 
   // Cards screen
   dom.cardsGallery = document.getElementById('cards-gallery');
-  dom.btCardsBack = document.getElementById('bt-cards-back');
 
   // Card large screen
   dom.cardLargeImage = document.getElementById('card-large-image');
@@ -125,9 +124,6 @@ function applyLanguage() {
   dom.btSettings.setAttribute('aria-label', txt('btn-settings'));
   dom.btInfo.setAttribute('aria-label', txt('btn-info'));
   dom.btTheme.setAttribute('aria-label', txt('btn-theme'));
-
-  // Cards screen
-  dom.btCardsBack.textContent = txt('btn-back-to-cards');
 
   // Large card screen
   dom.btCardBack.textContent = txt('btn-back-to-cards');
@@ -418,12 +414,6 @@ function setupEventListeners() {
     renderCards();
     goTo(1);
     playSound('click');
-  });
-
-  // Cards screen
-  dom.btCardsBack.addEventListener('click', () => {
-    goTo(0);
-    playSound('back');
   });
 
   // Large card screen
