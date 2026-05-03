@@ -26,7 +26,7 @@ const GROUP_COLORS = {
 
 const ALL_CARDS = Array.from({ length: 53 }, (_, i) => ({
   id: i,
-  imageUrl: `./assets/cartes_illustrations/${String(i).padStart(2, '0')}.jpg`
+  imageUrl: `./assets/images/cartes/${String(i).padStart(2, '0')}.jpg`
 }));
 
 /**
