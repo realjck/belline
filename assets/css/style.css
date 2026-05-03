@@ -526,22 +526,6 @@ img {
               border-color var(--theme-transition);
 }
 
-.btn-action {
-  padding: 8px 16px;
-  background-color: var(--color-border);
-  color: var(--color-bg);
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 600;
-  transition: opacity 0.2s ease,
-              background-color var(--theme-transition);
-  min-width: 80px;
-}
-
-.btn-action:active {
-  opacity: 0.8;
-}
-
 .nav-arr {
   width: 40px;
   height: 40px;
