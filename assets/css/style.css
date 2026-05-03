@@ -3,6 +3,28 @@
    ───────────────────────────────────────────────────────── */
 
 /* ═══════════════════════════════════════════════════════════
+   FONT FACES
+   ═══════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./fonts/poppins/poppins-400.woff2') format('woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./fonts/poppins/poppins-600.woff2') format('woff2');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./fonts/poppins/poppins-700.woff2') format('woff2');
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════════
    CSS CUSTOM PROPERTIES (Variables)
    ═══════════════════════════════════════════════════════════ */
 
