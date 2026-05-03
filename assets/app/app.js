@@ -258,6 +258,9 @@ function goTo(screenIndex) {
   // Enter screen: add active
   toScreen.classList.add('active');
 
+  // Scroll to top on certain screens
+  if (screenIndex === 1) dom.screenCards.scrollTop = 0;
+
   currentScreen = screenIndex;
 }
 
@@ -395,9 +398,11 @@ async function renderCardText() {
     const mdText = await response.text();
     const htmlContent = marked.parse(mdText);
     dom.cardTextContent.innerHTML = htmlContent;
+    dom.cardTextContent.scrollTop = 0;
   } catch (error) {
     console.error(`Failed to load card text: ${mdFile}`, error);
     dom.cardTextContent.innerHTML = `<p>Unable to load card text.</p>`;
+    dom.cardTextContent.scrollTop = 0;
   }
 }
 
