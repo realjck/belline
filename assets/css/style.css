@@ -83,7 +83,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #111;
+  background: var(--color-bg);
 }
 
 body {
@@ -310,8 +310,8 @@ img {
 .nav-arr svg { width: 20px; height: 20px; pointer-events: none; }
 .nav-arr:active { border-color: var(--color-accent); color: var(--color-accent); }
 .nav-arr.disabled { opacity: .25; pointer-events: none; }
-#arr-next { border-color: var(--color-accent); color: var(--color-accent); }
-#arr-next:active { background: var(--color-accent); color: var(--color-bg); }
+.nav-arr { border-color: var(--color-accent); color: var(--color-accent); }
+.nav-arr:active { background: var(--color-accent); color: var(--color-bg); }
 
 .bottom-nav {
   display: flex;
@@ -370,10 +370,11 @@ img {
 }
 
 .card-item {
-  border-radius: 15px;
+  border-radius: 2vw;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .card-item img {
@@ -418,7 +419,6 @@ img {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  overflow: hidden;
   min-height: 0;
 }
 
@@ -428,7 +428,8 @@ img {
   width: auto;
   height: auto;
   object-fit: contain;
-  border-radius: 28px;
+  border-radius: 6vw;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
 }
 
 .card-large-info {
@@ -524,25 +525,6 @@ img {
   background-color: var(--color-bg);
   transition: background-color var(--theme-transition),
               border-color var(--theme-transition);
-}
-
-.nav-arr {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition: opacity 0.2s ease;
-}
-
-.nav-arr svg {
-  width: 24px;
-  height: 24px;
-}
-
-.nav-arr:active {
-  opacity: 0.8;
 }
 
 .nav-arr.disabled {
