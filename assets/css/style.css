@@ -124,13 +124,6 @@ img {
   display: block;
 }
 
-.card-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  max-width: none;
-}
-
 /* ═══════════════════════════════════════════════════════════
    HEADER
    ═══════════════════════════════════════════════════════════ */
@@ -296,12 +289,10 @@ img {
 .cards-gallery {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  padding: 16px;
-  padding-left: max(16px, env(safe-area-inset-left));
-  padding-right: max(16px, env(safe-area-inset-right));
-  padding-bottom: 80px;
-  overflow-y: auto;
+  gap: 8px;
+  padding: 12px;
+  padding-bottom: 40px;
+  align-content: start;
 }
 
 .cards-group {
@@ -341,18 +332,20 @@ img {
 }
 
 .card-item {
-  aspect-ratio: 2 / 3;
   border-radius: 4px;
   overflow: hidden;
   cursor: pointer;
   border: 1px solid var(--color-border);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .card-item img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 2 / 3;
   object-fit: cover;
+  display: block;
+  max-width: none;
+  height: auto;
 }
 
 .card-item:active {
