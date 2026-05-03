@@ -263,7 +263,7 @@ img {
 .btn-start {
   margin-top: 40px;
   padding: 14px 44px;
-  border-radius: 40px;
+  border-radius: 9999px;
   border: 1.5px solid var(--color-accent);
   background: transparent;
   color: var(--color-accent-lt);
@@ -280,7 +280,7 @@ img {
 .btn-action {
   flex: 1;
   padding: 13px;
-  border-radius: 40px;
+  border-radius: 9999px;
   border: 1.5px solid var(--color-border);
   background: var(--color-bg2);
   color: var(--color-text);
