@@ -1,0 +1,103 @@
+<h2>Belline Oracle — Architecture & Navigation</h2>
+<p class="subtitle">Structure générale de l'application</p>
+
+<div class="section">
+  <h3>Pages principales</h3>
+  <div class="cards">
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #dccbaf 0%, #e8dcc3 100%); padding: 40px; text-align: center; color: #4a4a4a;">
+        <div style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">🏠</div>
+        <div style="font-size: 14px;">Home</div>
+      </div>
+      <div class="card-body">
+        <h3>Page d'accueil</h3>
+        <p><strong>Titre:</strong> "L'Oracle de Belline"<br><strong>Sous-titre:</strong> "Application compagnon"<br><strong>Actions:</strong> 2 boutons (Les cartes, Consulter l'oracle)</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #dccbaf 0%, #e8dcc3 100%); padding: 40px; text-align: center; color: #4a4a4a;">
+        <div style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">🃏</div>
+        <div style="font-size: 14px;">Les Cartes</div>
+      </div>
+      <div class="card-body">
+        <h3>Galerie des cartes</h3>
+        <p><strong>Contenu:</strong> 53 cartes en 8 groupes<br><strong>Groupes:</strong> 4 premières + 7 planètes<br><strong>Grille:</strong> 4 colonnes, responsive</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-image" style="background: linear-gradient(135deg, #dccbaf 0%, #e8dcc3 100%); padding: 40px; text-align: center; color: #4a4a4a;">
+        <div style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">📖</div>
+        <div style="font-size: 14px;">Détails Carte</div>
+      </div>
+      <div class="card-body">
+        <h3>Vue détaillée</h3>
+        <p><strong>Étape 1 (clic):</strong> Carte agrandie<br><strong>Étape 2 (clic):</strong> Texte markdown complet</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Navigation détaillée</h3>
+  <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 13px;">
+    <div style="margin-bottom: 10px;"><strong>Home</strong></div>
+    <div style="margin-left: 20px; color: #666;">
+      ↓ click "Les cartes" → Les Cartes<br>
+      ↓ click "Consulter l'oracle" → (désactivé pour maintenant)
+    </div>
+    <div style="margin-top: 15px; margin-bottom: 10px;"><strong>Les Cartes</strong></div>
+    <div style="margin-left: 20px; color: #666;">
+      ↓ click carte → Carte Agrandie<br>
+      ↑ click home icon → Home
+    </div>
+    <div style="margin-top: 15px; margin-bottom: 10px;"><strong>Carte Agrandie</strong></div>
+    <div style="margin-left: 20px; color: #666;">
+      ↓ click carte → Texte de la carte<br>
+      ← previous button → carte précédente<br>
+      → next button → carte suivante<br>
+      ⊙ center button → Les Cartes
+    </div>
+    <div style="margin-top: 15px; margin-bottom: 10px;"><strong>Texte de la carte</strong></div>
+    <div style="margin-left: 20px; color: #666;">
+      ↑ click texte → Carte Agrandie<br>
+      ← previous button → carte précédente<br>
+      → next button → carte suivante<br>
+      ⊙ center button → Les Cartes
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Modales (hérité de YiJing)</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+    <div style="background: #f9f9f9; padding: 15px; border-radius: 6px;">
+      <strong>Préférences</strong><br>
+      <small>• Langue (FR/EN)<br>• Thème (clair/sombre)<br>• Sons (activé/désactivé)</small>
+    </div>
+    <div style="background: #f9f9f9; padding: 15px; border-radius: 6px;">
+      <strong>Info</strong><br>
+      <small>• À propos de l'app<br>• Crédits<br>• Liens utiles</small>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Structure des données</h3>
+  <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 12px;">
+    <div style="margin-bottom: 10px;"><strong>GROUPS structure (Approche B)</strong></div>
+    <div style="margin-left: 20px; color: #333;">
+Groups = {<br>
+&nbsp;&nbsp;null: [0, 1, 2, 3],  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// "Les 4 premières"<br>
+&nbsp;&nbsp;'Soleil': [4, ..., 10],<br>
+&nbsp;&nbsp;'Lune': [11, ..., 17],<br>
+&nbsp;&nbsp;'Mercure': [18, ..., 24],<br>
+&nbsp;&nbsp;'Venus': [25, ..., 31],<br>
+&nbsp;&nbsp;'Mars': [32, ..., 38],<br>
+&nbsp;&nbsp;'Jupiter': [39, ..., 45],<br>
+&nbsp;&nbsp;'Saturne': [46, ..., 52]<br>
+}
+    </div>
+  </div>
+</div>

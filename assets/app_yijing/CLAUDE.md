@@ -1,0 +1,101 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Commands
+
+```bash
+npm install          # Install workbox-cli (only dev dependency)
+npm run pwa          # Regenerate sw.js (Service Worker) after asset changes
+```
+
+No build step — the app is served directly as static files. Open `index.html` in a browser or use any local HTTP server.
+
+## Architecture
+
+**Pure Vanilla JS PWA** — no bundler, no framework, no jQuery, no Swiper. Only production library is marked.js (vendored in `assets/libs/`).
+
+### Entry point
+
+`index.html` loads globals in this order before `app.js`:
+- `assets/libs/marked/marked.min.js` → `marked` (markdown parser)
+- `assets/data/ui-texts.js` → `UI_TEXTS[lang][key]`
+- `assets/data/hexagrams-texts.js` → `HEXAGRAMS_TEXTS[lang][binaryString]`
+
+All application logic lives in `assets/app/app.js`. It reads from these globals and from `localStorage` for language, sound, and theme preferences.
+
+### Layout
+
+`<header class="hdr">` is a direct child of `<body>` (outside `#app`) so its background can extend full-width via `box-shadow`. `#app` is a flex column taking the remaining height with `overflow: hidden`.
+
+### Screen system
+
+The UI uses a CSS screen system — no carousel. Each screen is `position: absolute; inset: 0` inside `#screens`. Transitions use classes:
+- `.screen` — default: `opacity: 0; transform: translateX(30px); pointer-events: none`
+- `.screen.active` — `opacity: 1; transform: translateX(0); pointer-events: all`
+- `.screen.leaving` — `opacity: 0; transform: translateX(-30px)` (removed after 400ms)
+
+**Screens:**
+```
+header.hdr         Shared header (outside #app)
+#app
+ └── #screens
+      ├── #s-home    (0) Home
+      ├── #s-inst    (1) Instructions
+      ├── #s-cast    (2) Casting
+      ├── #s-result  (3) Hexagram result image
+      └── #s-oracle  (4) Oracle text
+#modal-info        Info modal (slides up from bottom)
+#modal-settings    Settings modal (centered, scale animation) — language & sound controls
+```
+
+The header uses `padding: calc(env(safe-area-inset-top, 0px) + 12px)` so it adapts to the device status bar in PWA fullscreen mode without adding unnecessary space in a regular browser. Requires `viewport-fit=cover` in the meta viewport (already set).
+
+Navigation via `goTo(idx)`. Home button resets casting and returns to screen 0.
+
+### Theme
+
+Dark/light toggle via `:root.light` CSS class. Persisted in `localStorage('YiJingXiang_theme')`. CSS variables defined in `:root` and `:root.light`.
+
+### Yi Jing casting logic
+
+Coin tosses accumulate via `AddBar(type)`. After 6 tosses, the 6-character state string (`yiking`, each char: 6/7/8/9) is converted to two 6-bit binary strings:
+- **Hexagram 1**: stable lines (7→1, 8→0, mutating→stays)
+- **Hexagram 2**: changing lines (mutations flipped)
+
+`yiking[i]` maps to position `i+1` (bottom=1, top=6). A mutation occurs when the value is `6` (yin-mut) or `9` (yang-mut).
+
+### Result screen
+
+`showResultStep()` renders the result card with trigram images. If mutation, `resultStep` toggles between hexagram 1 and 2. The result card itself is clickable (advances like the `→` button). Images are updated synchronously before the card animation to avoid flash of previous hexagram.
+
+### Oracle reader
+
+`buildOracleHTML()` (async) fetches and assembles the oracle text:
+1. Loads `assets/data/book/{lang}/{nn}.md` for hexagram 1 (number extracted from `HEXAGRAMS_TEXTS`)
+2. Renders all `h1` and `h2` sections via `marked.parse()`
+3. If mutation: renders only the `h3` sections at mutated positions (h3 blocks are ordered bottom→top, matching `yiking` index 0→5); also includes the 7th `h3` ("Tous les traits") if all 6 lines are mutant
+4. If mutation: loads hexagram 2's markdown and renders its `h1`/`h2` sections, preceded by an `<hr>`
+
+`parseSections(mdText)` splits raw markdown into `{level, h3Index, markdown}` objects by heading regex `^(#{1,3}) `.
+
+### Localization
+
+Two languages (en/fr), persisted in `localStorage` as `YiJingXiang_lang`. `SwitchLang()` re-renders all UI text including coin labels (`coin-face`/`coin-pile`), syncs the active state of the language buttons in `#modal-settings`, and reloads oracle content if a casting is active. Language is switched from the settings modal (gear button in header), not from the navbar directly.
+
+### Data
+
+- **Hexagram titles**: `assets/data/hexagrams-texts.js` — 64 entries per language, keyed by 6-bit binary string, format: `"1. 乾 Ch'ien / The Creative"`
+- **Book content**: `assets/data/book/en/*.md` and `assets/data/book/fr/*.md` — 64 Markdown files (01.md … 64.md), one per hexagram
+- **UI strings**: `assets/data/ui-texts.js` — all interface labels in EN/FR
+
+### Fonts
+
+Self-hosted in `assets/fonts/`:
+- `Hidetoshy/` — display font for Chinese characters and titles
+- `noto-serif/` — body text (400, 400-italic, 600)
+- `noto-sans-sc/` — UI labels and buttons (500)
+
+### PWA / Service Worker
+
+`sw.js` is generated by Workbox CLI (`npm run pwa`). It precaches all static assets (including all `.md` files, `.woff2` fonts, and `marked.min.js`) for offline-first operation. Regenerate it whenever assets are added or renamed.
