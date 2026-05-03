@@ -80,20 +80,32 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background: #111;
 }
 
 body {
   font-family: 'Noto Serif', 'Georgia', serif;
-  background-color: var(--color-bg);
   color: var(--color-text);
-  transition: background-color var(--theme-transition),
-              color var(--theme-transition);
   font-size: 16px;
   line-height: 1.6;
   -webkit-user-select: none;
   user-select: none;
   -webkit-font-smoothing: antialiased;
   -webkit-touch-callout: none;
+  display: flex;
+  justify-content: center;
+}
+
+#main {
+  width: 100%;
+  max-width: 720px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--color-bg);
+  transition: background-color var(--theme-transition),
+              color var(--theme-transition);
 }
 
 button {
@@ -110,6 +122,13 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+.card-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: none;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -174,7 +193,7 @@ img {
 #app {
   position: relative;
   width: 100%;
-  height: calc(100vh - 56px);
+  flex: 1;
   overflow: hidden;
   display: flex;
 }
