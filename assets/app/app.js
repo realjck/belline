@@ -55,6 +55,8 @@ function cacheDOM() {
   // Card text screen
   dom.cardTextContent = document.getElementById('card-text-content');
   dom.btTextBack = document.getElementById('bt-text-back');
+  dom.arrPrevText = document.getElementById('arr-prev-text');
+  dom.arrNextText = document.getElementById('arr-next-text');
 
   // Modals
   dom.modalSettings = document.getElementById('modal-settings');
@@ -429,6 +431,8 @@ function setupEventListeners() {
     goTo(2);
     playSound('back');
   });
+  dom.arrPrevText.addEventListener('click', () => { prevCard(); playSound('back'); });
+  dom.arrNextText.addEventListener('click', () => { nextCard(); playSound('click'); });
 
   // Settings modal
   dom.settingsLangEn.addEventListener('click', () => switchLang('en'));
