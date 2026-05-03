@@ -1,0 +1,26 @@
+# Worktrees
+.worktrees/
+worktrees/
+
+# Dependencies
+node_modules/
+*.egg-info/
+__pycache__/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Superpowers
+.superpowers/
+.claude/
+
+# Local env
+.env.local
+*.log
