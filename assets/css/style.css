@@ -652,6 +652,10 @@ img {
   line-height: 1.8;
 }
 
+.info-version {
+  color: var(--color-muted);
+}
+
 .modal-close {
   position: absolute;
   top: 12px;

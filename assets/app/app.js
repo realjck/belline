@@ -138,7 +138,7 @@ function applyLanguage() {
   dom.modalSettingsTitle.textContent = txt('settings-title');
   dom.modalInfoTitle.textContent = txt('info-title');
   dom.modalInfoBody.innerHTML = `
-    <p>${txt('info-version')}</p>
+    <p class="info-version">${txt('info-version')}</p>
     <p>${txt('info-text')}</p>
   `;
 
