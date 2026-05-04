@@ -2,7 +2,7 @@ const UI_TEXTS = {
   fr: {
     // Home page
     'home-title': 'L\'Oracle de Belline',
-    'home-subtitle': 'Application compagnon',
+    'home-subtitle': 'Tirages et interprétations des cartes',
     'btn-cards': 'Les cartes',
     'btn-oracle': 'Consulter l\'oracle',
 

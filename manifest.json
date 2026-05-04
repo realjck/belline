@@ -1,0 +1,8 @@
+{
+  "name": "Oracle de Belline",
+  "short_name": "Belline",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5efe6",
+  "theme_color": "#7a5c3a"
+}

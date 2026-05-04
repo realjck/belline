@@ -2,37 +2,9 @@
    Belline Oracle - Complete CSS
    ───────────────────────────────────────────────────────── */
 
-/* ═══════════════════════════════════════════════════════════
-   FONT FACES
-   ═══════════════════════════════════════════════════════════ */
-
-@font-face {
-  font-family: 'Poppins';
-  src: url('./fonts/poppins/poppins-400.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Poppins';
-  src: url('./fonts/poppins/poppins-600.woff2') format('woff2');
-  font-weight: 600;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Poppins';
-  src: url('./fonts/poppins/poppins-700.woff2') format('woff2');
-  font-weight: 700;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Noto Sans SC';
-  src: url('./fonts/noto-sans-sc/noto-sans-sc-500.woff2') format('woff2');
-  font-weight: 500;
-  font-display: swap;
-}
+/* Fonts chargées via Google Fonts dans index.html :
+   - Big Shoulders Display (100–900) → titres uppercase
+   - DM Sans variable (100–900)      → corps de texte     */
 
 /* ═══════════════════════════════════════════════════════════
    CSS CUSTOM PROPERTIES (Variables)
@@ -87,7 +59,7 @@ html, body {
 }
 
 body {
-  font-family: 'Noto Serif', 'Georgia', serif;
+  font-family: 'DM Sans', sans-serif;
   color: var(--color-text);
   font-size: 16px;
   line-height: 1.6;
@@ -161,7 +133,7 @@ img {
   width: 40px;
   height: 40px;
   transition: border-color .2s, color .2s;
-  font-family: 'Noto Sans SC', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 500;
   font-size: 14px;
   flex-shrink: 0;
@@ -240,21 +212,25 @@ img {
 }
 
 .home-title {
-  font-size: 32px;
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: 64px;
   font-weight: 700;
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   text-align: center;
   margin-bottom: 12px;
 }
 
 .home-logo {
-  width: 140px;
-  height: 140px;
-  border-radius: 12px;
+  width: 300px;
 }
 
 .home-sub {
   font-size: 16px;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   opacity: 0.9;
   margin-bottom: 12px;
 }
@@ -266,7 +242,7 @@ img {
   border: 1.5px solid var(--color-accent);
   background: transparent;
   color: var(--color-accent-lt);
-  font-family: 'Noto Sans SC', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 500;
   letter-spacing: .2em;
   font-size: 15px;
@@ -283,7 +259,7 @@ img {
   border: 1.5px solid var(--color-border);
   background: var(--color-bg2);
   color: var(--color-text);
-  font-family: 'Noto Sans SC', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 500;
   font-size: 14px;
   letter-spacing: .15em;
@@ -340,9 +316,11 @@ img {
 
 .cards-group-header {
   grid-column: 1 / -1;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Big Shoulders Display', sans-serif;
   font-size: 16px;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   padding: 12px 0 8px 0;
   margin-top: 8px;
   border-bottom: 2px solid;
@@ -450,8 +428,11 @@ img {
 .card-enter-left  { opacity: 0; transform: translateX(-50px); transition: none !important; }
 
 .card-large-title {
+  font-family: 'Big Shoulders Display', sans-serif;
   font-size: 24px;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   margin-bottom: 8px;
 }
 
@@ -483,6 +464,7 @@ img {
 #card-text-content h4,
 #card-text-content h5,
 #card-text-content h6 {
+  font-family: 'Big Shoulders Display', sans-serif;
   font-weight: 600;
   margin: 16px 0 12px 0;
   line-height: 1.4;
@@ -606,8 +588,11 @@ img {
 }
 
 .modal-title {
+  font-family: 'Big Shoulders Display', sans-serif;
   font-size: 20px;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   margin-bottom: 16px;
   text-align: center;
 }
@@ -700,6 +685,12 @@ img {
 /* ═══════════════════════════════════════════════════════════
    TYPOGRAPHY
    ═══════════════════════════════════════════════════════════ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Big Shoulders Display', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
 
 h1 {
   font-size: 32px;
