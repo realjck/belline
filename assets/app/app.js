@@ -388,6 +388,22 @@ async function renderCardText() {
     const mdText = await response.text();
     const htmlContent = marked.parse(mdText);
     dom.cardTextContent.innerHTML = htmlContent;
+
+    const groupKey = Object.keys(GROUPS).find(key => GROUPS[key].includes(currentCardId)) || null;
+    const groupName = groupKey === 'null' ? null : groupKey;
+    const groupColor = getGroupColor(groupName);
+    const groupSymbol = getGroupSymbol(groupName);
+    if (groupColor && groupSymbol) {
+      const h1 = dom.cardTextContent.querySelector('h1');
+      if (h1) {
+        const square = document.createElement('span');
+        square.className = 'planet-color-square';
+        square.style.background = groupColor;
+        square.textContent = groupSymbol;
+        h1.insertBefore(square, h1.firstChild);
+      }
+    }
+
     dom.cardTextContent.scrollTop = 0;
   } catch (error) {
     console.error(`Failed to load card text: ${mdFile}`, error);
