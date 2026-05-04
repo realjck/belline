@@ -425,7 +425,8 @@ function openInfoModal() {
 }
 
 function closeInfoModal() {
-  dom.modalInfo.classList.remove('active');
+  dom.modalInfo.classList.add('closing');
+  setTimeout(() => dom.modalInfo.classList.remove('active', 'closing'), 280);
   playSound('back');
 }
 
