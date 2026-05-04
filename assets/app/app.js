@@ -46,8 +46,8 @@ function cacheDOM() {
 
   // Card large screen
   dom.cardLargeImage = document.getElementById('card-large-image');
-  dom.cardLargeTitle = document.getElementById('card-large-title');
-  dom.cardLargeNumber = document.getElementById('card-large-number');
+  dom.cardLargeHeader = document.getElementById('card-large-header');
+  dom.cardLargePlanet = document.getElementById('card-large-planet');
   dom.cardLargeContainer = document.querySelector('.card-large-container');
   dom.cardLargeInfoEl = document.querySelector('.card-large-info');
   dom.arrPrev = document.getElementById('arr-prev');
@@ -354,25 +354,19 @@ function renderCardLarge() {
   const groupKey = Object.keys(GROUPS).find(key => GROUPS[key].includes(currentCardId)) || null;
   const groupName = groupKey === 'null' ? null : groupKey;
 
-  // Update card info
+  // Title above the card
+  const cardName = getCardName(currentCardId, currentLang);
+  dom.cardLargeHeader.textContent = `${currentCardId} / ${cardName}`;
+
+  // Card image
   dom.cardLargeImage.src = card.imageUrl;
-  dom.cardLargeImage.alt = `Card ${currentCardId}`;
+  dom.cardLargeImage.alt = cardName;
 
-  // Get card name from text file title (fallback to number if not available)
-  dom.cardLargeNumber.textContent = `#${String(currentCardId).padStart(2, '0')}`;
-
-  // Load card title from markdown if available
-  const titlePromise = fetch(`./assets/data/book/${currentLang}/${String(currentCardId).padStart(2, '0')}.md`)
-    .then(r => r.text())
-    .then(text => {
-      const match = text.match(/^#\s+(.+)$/m);
-      if (match) {
-        dom.cardLargeTitle.textContent = match[1];
-      }
-    })
-    .catch(() => {
-      dom.cardLargeTitle.textContent = '';
-    });
+  // Planet group below the card
+  const groupColor = getGroupColor(groupName);
+  const groupLabel = groupName ? txt(`group-${groupName}`) : '';
+  const square = groupColor ? `<span class="planet-color-square" style="background:${groupColor}"></span>` : '';
+  dom.cardLargePlanet.innerHTML = groupLabel ? `${square}<span>${groupLabel}</span>` : '';
 
   // Update navigation buttons
   dom.arrPrev.classList.remove('disabled');
