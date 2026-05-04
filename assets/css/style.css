@@ -783,22 +783,10 @@ p {
     padding: 32px;
   }
 
-  .card-large-info {
+#card-text-content {
     padding: 32px;
   }
 
-  #card-text-content {
-    padding: 32px;
-  }
-
-  .bottom-nav {
-    padding: 24px 32px;
-  }
-
-  .hdr {
-    padding: 16px 32px;
-    padding-top: max(16px, env(safe-area-inset-top));
-  }
 }
 
 /* ═══════════════════════════════════════════════════════════
