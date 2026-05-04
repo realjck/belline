@@ -24,6 +24,35 @@ const GROUP_COLORS = {
   Saturne: '#814c9a'
 };
 
+const CARD_NAMES = {
+  fr: [
+    'Carte bleue', 'La Destinée', "L'étoile de l'homme", "L'étoile de la femme",
+    'Nativité', 'Réussite', 'Élévation', 'Honneurs', 'Pensée Amitié', 'Campagne Santé', 'Présents',
+    'Trahison', 'Départ', 'Inconstance', 'Découverte', "L'eau", 'Les pénates', 'Maladie',
+    'Changement', 'Argent', 'Intelligence', 'Vol Perte', 'Entreprises', 'Trafic', 'Nouvelle',
+    'Plaisirs', 'Paix', 'Union', 'Famille', 'Amor', 'La table', 'Passions',
+    'Méchanceté', 'Procès', 'Despotisme', 'Ennemis', 'Pourparlers', 'Feu', 'Accident',
+    'Appui', 'Beauté', 'Héritage', 'Sagesse', 'La renommée', 'Le hasard', 'Bonheur',
+    'Infortune', 'Stérilité', 'Fatalité', 'Grâce', 'Ruine', 'Retard', 'Cloître'
+  ],
+  en: [
+    'Carte bleue', 'La Destinée', "L'étoile de l'homme", "L'étoile de la femme",
+    'Nativité', 'Réussite', 'Élévation', 'Honneurs', 'Pensée Amitié', 'Campagne Santé', 'Présents',
+    'Trahison', 'Départ', 'Inconstance', 'Découverte', "L'eau", 'Les pénates', 'Maladie',
+    'Changement', 'Argent', 'Intelligence', 'Vol Perte', 'Entreprises', 'Trafic', 'Nouvelle',
+    'Plaisirs', 'Paix', 'Union', 'Famille', 'Amor', 'La table', 'Passions',
+    'Méchanceté', 'Procès', 'Despotisme', 'Ennemis', 'Pourparlers', 'Feu', 'Accident',
+    'Appui', 'Beauté', 'Héritage', 'Sagesse', 'La renommée', 'Le hasard', 'Bonheur',
+    'Infortune', 'Stérilité', 'Fatalité', 'Grâce', 'Ruine', 'Retard', 'Cloître'
+  ]
+};
+
+/** Returns the card name in the given language, falling back to French. */
+function getCardName(cardId, lang) {
+  const names = CARD_NAMES[lang] || CARD_NAMES.fr;
+  return names[cardId] ?? CARD_NAMES.fr[cardId];
+}
+
 const ALL_CARDS = Array.from({ length: 53 }, (_, i) => ({
   id: i,
   imageUrl: `./assets/images/cartes/${String(i).padStart(2, '0')}.jpg`

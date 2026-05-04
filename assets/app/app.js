@@ -323,12 +323,10 @@ function renderCards() {
 
       const groupName = groupKey === 'null' ? null : groupKey;
       const groupTextKey = groupName === null ? 'group-4premières' : `group-${groupName}`;
-      headerDiv.textContent = txt(groupTextKey);
-
       const groupColor = getGroupColor(groupName);
-      if (groupColor) {
-        headerDiv.style.borderBottomColor = groupColor;
-      }
+      const square = groupColor ? `<span class="group-color-square" style="background:${groupColor}"></span>` : '';
+      headerDiv.innerHTML = `${square}<span>${txt(groupTextKey)}</span>`;
+      if (groupColor) headerDiv.style.borderBottomColor = groupColor;
 
       dom.cardsGallery.appendChild(headerDiv);
       previousGroupKey = groupKey;
@@ -337,7 +335,9 @@ function renderCards() {
     // Create card element
     const cardDiv = document.createElement('div');
     cardDiv.className = 'card-item';
-    cardDiv.innerHTML = `<img src="${card.imageUrl}" alt="Card ${card.id}" loading="lazy">`;
+    cardDiv.innerHTML = `
+      <div class="card-item-label">${card.id} — ${getCardName(card.id, currentLang)}</div>
+      <div class="card-item-img"><img src="${card.imageUrl}" alt="${card.name}" loading="lazy"></div>`;
     cardDiv.addEventListener('click', () => {
       currentCardId = card.id;
       renderCardLarge();
