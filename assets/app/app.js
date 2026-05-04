@@ -53,13 +53,11 @@ function cacheDOM() {
   dom.cardLargeInfoEl = document.querySelector('.card-large-info');
   dom.arrPrev = document.getElementById('arr-prev');
   dom.arrNext = document.getElementById('arr-next');
-  dom.btCardBack = document.getElementById('bt-card-back');
 
   // Card text screen
   dom.cardTextContent = document.getElementById('card-text-content');
   dom.btTextBack = document.getElementById('bt-text-back');
   dom.arrPrevText = document.getElementById('arr-prev-text');
-  dom.arrNextText = document.getElementById('arr-next-text');
 
   // Modals
   dom.modalSettings = document.getElementById('modal-settings');
@@ -132,7 +130,6 @@ function applyLanguage() {
   dom.btTheme.setAttribute('aria-label', txt('btn-theme'));
 
   // Large card screen
-  dom.btCardBack.textContent = txt('btn-back-to-cards');
 
   // Text screen
   dom.btTextBack.textContent = txt('btn-back-to-cards');
@@ -371,8 +368,6 @@ function renderCardLarge() {
   dom.cardLargePlanet.innerHTML = groupLabel ? `${square}<span>${groupLabel}</span>` : '';
 
   // Update navigation buttons
-  dom.arrPrev.classList.remove('disabled');
-  dom.arrNext.classList.remove('disabled');
 
   // Add click handler to image to view text
   dom.cardLargeImage.style.cursor = 'pointer';
@@ -447,20 +442,12 @@ function setupEventListeners() {
   });
 
   // Large card screen
-  dom.arrPrev.addEventListener('click', prevCard);
-  dom.arrNext.addEventListener('click', nextCard);
-  dom.btCardBack.addEventListener('click', () => {
-    goTo(1);
-    playSound('back');
-  });
+  dom.arrPrev.addEventListener('click', () => { goTo(1); playSound('back'); });
+  dom.arrNext.addEventListener('click', () => { renderCardText(); goTo(3); playSound('click'); });
 
   // Text screen
-  dom.btTextBack.addEventListener('click', () => {
-    goTo(2);
-    playSound('back');
-  });
-  dom.arrPrevText.addEventListener('click', prevCard);
-  dom.arrNextText.addEventListener('click', nextCard);
+  dom.arrPrevText.addEventListener('click', () => { goTo(2); playSound('back'); });
+  dom.btTextBack.addEventListener('click', () => { goTo(1); playSound('back'); });
 
   // Settings modal
   dom.settingsLangEn.addEventListener('click', () => switchLang('en'));
