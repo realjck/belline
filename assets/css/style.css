@@ -696,6 +696,8 @@ img {
 }
 
 .settings-opt.active {
+  background-color: var(--color-text);
+  color: var(--color-bg);
   opacity: 1;
 }
 
