@@ -320,7 +320,8 @@ function renderCards() {
       const groupName = groupKey === 'null' ? null : groupKey;
       const groupTextKey = groupName === null ? 'group-4premières' : `group-${groupName}`;
       const groupColor = getGroupColor(groupName);
-      const square = groupColor ? `<span class="group-color-square" style="background:${groupColor}"></span>` : '';
+      const groupSymbol = getGroupSymbol(groupName);
+      const square = groupColor ? `<span class="group-color-square" style="background:${groupColor}">${groupSymbol || ''}</span>` : '';
       headerDiv.innerHTML = `${square}<span>${txt(groupTextKey)}</span>`;
       if (groupColor) headerDiv.style.borderBottomColor = groupColor;
 
@@ -360,8 +361,9 @@ function renderCardLarge() {
 
   // Planet group below the card
   const groupColor = getGroupColor(groupName);
+  const groupSymbol = getGroupSymbol(groupName);
   const groupLabel = groupName ? txt(`group-${groupName}`) : '';
-  const square = groupColor ? `<span class="planet-color-square" style="background:${groupColor}"></span>` : '';
+  const square = groupColor ? `<span class="planet-color-square" style="background:${groupColor}">${groupSymbol || ''}</span>` : '';
   dom.cardLargePlanet.innerHTML = groupLabel ? `${square}<span>${groupLabel}</span>` : '';
 
   // Update navigation buttons

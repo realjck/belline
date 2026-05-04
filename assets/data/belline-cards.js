@@ -24,6 +24,21 @@ const GROUP_COLORS = {
   Saturne: '#814c9a'
 };
 
+const GROUP_SYMBOLS = {
+  Soleil:  '☉',
+  Lune:    '☾',
+  Mercure: '☿',
+  Venus:   '♀︎',
+  Mars:    '♂︎',
+  Jupiter: '♃',
+  Saturne: '♄'
+};
+
+function getGroupSymbol(groupName) {
+  if (!groupName) return null;
+  return GROUP_SYMBOLS[groupName] || null;
+}
+
 const CARD_NAMES = {
   fr: [
     'Carte bleue', 'La Destinée', "L'étoile de l'homme", "L'étoile de la femme",
