@@ -38,6 +38,7 @@ function cacheDOM() {
   dom.btTheme = document.getElementById('bt-theme');
 
   // Home screen
+  dom.homeTitle = document.getElementById('home-title');
   dom.homeSubtitle = document.getElementById('home-subtitle');
   dom.btStart = document.getElementById('bt-start');
 
@@ -120,6 +121,7 @@ function txt(key) {
 
 function applyLanguage() {
   // Home screen
+  dom.homeTitle.innerHTML = txt('home-title');
   dom.homeSubtitle.textContent = txt('home-subtitle');
   dom.btStart.textContent = txt('btn-cards');
 
