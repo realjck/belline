@@ -336,7 +336,7 @@ function renderCards() {
     const cardDiv = document.createElement('div');
     cardDiv.className = 'card-item';
     cardDiv.innerHTML = `
-      <div class="card-item-label">${card.id} — ${getCardName(card.id, currentLang)}</div>
+      <div class="card-item-label">${card.id} / ${getCardName(card.id, currentLang)}</div>
       <div class="card-item-img"><img src="${card.imageUrl}" alt="${card.name}" loading="lazy"></div>`;
     cardDiv.addEventListener('click', () => {
       currentCardId = card.id;
