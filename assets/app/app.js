@@ -257,9 +257,6 @@ function goTo(screenIndex) {
   // Enter screen: add active
   toScreen.classList.add('active');
 
-  // Scroll to top on certain screens
-  if (screenIndex === 1) dom.screenCards.scrollTop = 0;
-
   currentScreen = screenIndex;
 }
 
@@ -426,6 +423,7 @@ function closeInfoModal() {
 function setupEventListeners() {
   // Header buttons
   dom.btHome.addEventListener('click', () => {
+    dom.screenCards.scrollTop = 0;
     goTo(0);
     playSound('back');
   });

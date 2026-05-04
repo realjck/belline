@@ -497,16 +497,16 @@ img {
 }
 
 #card-text-content h1 {
-  font-size: 24px;
+  font-size: 32px;
 }
 
 #card-text-content h2 {
-  font-size: 18px;
+  font-size: 24px;
 }
 
 #card-text-content h3,
 #card-text-content h4 {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 #card-text-content p {
