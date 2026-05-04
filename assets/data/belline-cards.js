@@ -20,7 +20,7 @@ const GROUP_COLORS = {
   Mercure: '#e64f3a',
   Venus: '#089992',
   Mars: '#b81540',
-  Jupiter: '#0c2462',
+  Jupiter: '#5aaa1c',
   Saturne: '#814c9a'
 };
 
