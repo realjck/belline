@@ -53,7 +53,7 @@ After parsing and injecting the h1 planet square (existing), iterate over the 5 
 
 **Constant to add near top of app.js:**
 ```js
-const H3_SYMBOLS = ['♡', '⌬', '❖', 'ᗑ', '☸'];
+const H3_SYMBOLS = ['♡', '⌬', '❖', 'ᗑ', '☸︎'];
 ```
 
 **Injection code (after h1 square injection):**
