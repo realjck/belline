@@ -298,6 +298,13 @@ img {
   padding: 12px;
   padding-bottom: 40px;
   align-content: start;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+#s-cards {
+  overflow-y: hidden;
 }
 
 @media (min-width: 520px) {
