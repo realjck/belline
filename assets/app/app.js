@@ -10,6 +10,7 @@ let currentTheme = 'light';
 let soundEnabled = true;
 let currentScreen = 0;
 let currentCardId = 0;
+const H3_SYMBOLS = ['♡', '⌬', '❖', 'ᗑ', '☸︎'];
 
 const screenMap = {
   0: 's-home',
