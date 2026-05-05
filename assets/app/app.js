@@ -410,6 +410,17 @@ async function renderCardText() {
       }
     }
 
+    const h3s = dom.cardTextContent.querySelectorAll('h3');
+    const symbolColor = groupColor || 'var(--color-accent)';
+    h3s.forEach((h3, i) => {
+      if (i >= H3_SYMBOLS.length) return;
+      const span = document.createElement('span');
+      span.className = 'h3-symbol';
+      span.textContent = H3_SYMBOLS[i];
+      span.style.color = symbolColor;
+      h3.insertBefore(span, h3.firstChild);
+    });
+
     dom.cardTextContent.scrollTop = 0;
   } catch (error) {
     console.error(`Failed to load card text: ${mdFile}`, error);
