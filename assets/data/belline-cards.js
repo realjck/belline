@@ -121,8 +121,11 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     GROUPS,
     GROUP_COLORS,
+    GROUP_SYMBOLS,
     ALL_CARDS,
     getGroupNameForCardId,
-    getGroupColor
+    getGroupColor,
+    getGroupSymbol,
+    getCardName
   };
 }

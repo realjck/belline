@@ -27,14 +27,6 @@
   --color-accent:  #7a5c3a;
   --color-accent-lt: #a07850;
 
-  --color-soleil:  #d47706;
-  --color-lune:    #3c6382;
-  --color-mercure: #e64f3a;
-  --color-venus:   #089992;
-  --color-mars:    #b81540;
-  --color-jupiter: #0c2462;
-  --color-saturne: #814c9a;
-
   --r: 16px;
   --theme-transition: 0.3s ease;
 }
@@ -291,7 +283,6 @@ img {
 }
 .nav-arr svg { width: 20px; height: 20px; pointer-events: none; }
 .nav-arr:active { border-color: var(--color-accent); color: var(--color-accent); }
-.nav-arr.disabled { opacity: .25; pointer-events: none; }
 .nav-arr { border-color: var(--color-accent); color: var(--color-accent); }
 .nav-arr:active { background: var(--color-accent); color: var(--color-bg); }
 
@@ -314,12 +305,6 @@ img {
     grid-template-columns: repeat(7, 1fr);
     gap: 10px;
   }
-}
-
-.cards-group {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 }
 
 .cards-group-header {
@@ -392,25 +377,6 @@ img {
 .card-item:active {
   transform: scale(0.95);
   opacity: 0.8;
-}
-
-.card-thumbnail {
-  aspect-ratio: 3 / 4;
-  border-radius: 4px;
-  overflow: hidden;
-  cursor: pointer;
-  border: 1px solid var(--color-border);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card-thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.card-thumbnail:active {
-  transform: scale(0.95);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -818,17 +784,6 @@ p {
 /* Mobile-first: base styles above are for mobile */
 /* Max-width constraint: 720px as per spec */
 /* 4-column grid maintained on all screen sizes */
-
-@media (min-width: 768px) {
-  .cards-gallery {
-    padding: 32px;
-  }
-
-#card-text-content {
-    padding: 32px;
-  }
-
-}
 
 /* ═══════════════════════════════════════════════════════════
    UTILITY CLASSES

@@ -10,7 +10,6 @@ let currentTheme = 'light';
 let soundEnabled = true;
 let currentScreen = 0;
 let currentCardId = 0;
-let isCardTextView = false;
 
 const screenMap = {
   0: 's-home',
@@ -305,19 +304,16 @@ function renderHome() {
 function renderCards() {
   dom.cardsGallery.innerHTML = '';
 
-  // Get all unique groups in order
-  const groupKeys = Object.keys(GROUPS);
-  let previousGroupKey = null;
+  let previousGroupName = undefined;
 
   ALL_CARDS.forEach(card => {
-    const groupKey = Object.keys(GROUPS).find(key => GROUPS[key].includes(card.id)) || null;
+    const groupName = getGroupNameForCardId(card.id);
 
     // Add group header if this is a new group
-    if (groupKey !== previousGroupKey) {
+    if (groupName !== previousGroupName) {
       const headerDiv = document.createElement('div');
       headerDiv.className = 'cards-group-header';
 
-      const groupName = groupKey === 'null' ? null : groupKey;
       const groupTextKey = groupName === null ? 'group-4premières' : `group-${groupName}`;
       const groupColor = getGroupColor(groupName);
       const groupSymbol = getGroupSymbol(groupName);
@@ -326,7 +322,7 @@ function renderCards() {
       if (groupColor) headerDiv.style.borderBottomColor = groupColor;
 
       dom.cardsGallery.appendChild(headerDiv);
-      previousGroupKey = groupKey;
+      previousGroupName = groupName;
     }
 
     // Create card element
@@ -334,7 +330,7 @@ function renderCards() {
     cardDiv.className = 'card-item';
     cardDiv.innerHTML = `
       <div class="card-item-label">${card.id} / ${getCardName(card.id, currentLang)}</div>
-      <div class="card-item-img"><img src="${card.imageUrl}" alt="${card.name}" loading="lazy"></div>`;
+      <div class="card-item-img"><img src="${card.imageUrl}" alt="${getCardName(card.id, currentLang)}" loading="lazy"></div>`;
     cardDiv.addEventListener('click', () => {
       currentCardId = card.id;
       renderCardLarge();
@@ -348,8 +344,7 @@ function renderCards() {
 
 function renderCardLarge() {
   const card = ALL_CARDS[currentCardId];
-  const groupKey = Object.keys(GROUPS).find(key => GROUPS[key].includes(currentCardId)) || null;
-  const groupName = groupKey === 'null' ? null : groupKey;
+  const groupName = getGroupNameForCardId(currentCardId);
 
   // Title above the card
   const cardName = getCardName(currentCardId, currentLang);
@@ -389,8 +384,7 @@ async function renderCardText() {
     const htmlContent = marked.parse(mdText);
     dom.cardTextContent.innerHTML = htmlContent;
 
-    const groupKey = Object.keys(GROUPS).find(key => GROUPS[key].includes(currentCardId)) || null;
-    const groupName = groupKey === 'null' ? null : groupKey;
+    const groupName = getGroupNameForCardId(currentCardId);
     const groupColor = getGroupColor(groupName);
     const groupSymbol = getGroupSymbol(groupName);
     if (groupColor && groupSymbol) {
