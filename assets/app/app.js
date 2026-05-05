@@ -44,6 +44,7 @@ function cacheDOM() {
 
   // Cards screen
   dom.cardsGallery = document.getElementById('cards-gallery');
+  dom.arrCardsHome = document.getElementById('arr-cards-home');
 
   // Card large screen
   dom.cardLargeImage = document.getElementById('card-large-image');
@@ -458,7 +459,13 @@ function closeInfoModal() {
 function setupEventListeners() {
   // Header buttons
   dom.btHome.addEventListener('click', () => {
-    dom.screenCards.scrollTop = 0;
+    dom.cardsGallery.scrollTop = 0;
+    goTo(0);
+    playSound('back');
+  });
+
+  dom.arrCardsHome.addEventListener('click', () => {
+    dom.cardsGallery.scrollTop = 0;
     goTo(0);
     playSound('back');
   });
