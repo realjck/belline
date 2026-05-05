@@ -382,7 +382,18 @@ async function renderCardText() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     const mdText = await response.text();
-    const htmlContent = marked.parse(mdText);
+
+    const h2Regex = /^## /gm;
+    let count = 0;
+    let cutIndex = mdText.length;
+    let match;
+    while ((match = h2Regex.exec(mdText)) !== null) {
+      count++;
+      if (count === 2) { cutIndex = match.index; break; }
+    }
+    const truncatedMd = mdText.slice(0, cutIndex);
+
+    const htmlContent = marked.parse(truncatedMd);
     dom.cardTextContent.innerHTML = htmlContent;
 
     const groupName = getGroupNameForCardId(currentCardId);
