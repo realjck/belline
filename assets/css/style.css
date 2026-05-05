@@ -812,18 +812,21 @@ p {
 
 .screen::-webkit-scrollbar,
 #card-text-content::-webkit-scrollbar,
+.cards-gallery::-webkit-scrollbar,
 .modal-sheet::-webkit-scrollbar {
   width: 4px;
 }
 
 .screen::-webkit-scrollbar-track,
 #card-text-content::-webkit-scrollbar-track,
+.cards-gallery::-webkit-scrollbar-track,
 .modal-sheet::-webkit-scrollbar-track {
   background: transparent;
 }
 
 .screen::-webkit-scrollbar-thumb,
 #card-text-content::-webkit-scrollbar-thumb,
+.cards-gallery::-webkit-scrollbar-thumb,
 .modal-sheet::-webkit-scrollbar-thumb {
   background-color: var(--color-border);
   border-radius: 2px;
@@ -831,6 +834,7 @@ p {
 
 .screen::-webkit-scrollbar-thumb:hover,
 #card-text-content::-webkit-scrollbar-thumb:hover,
+.cards-gallery::-webkit-scrollbar-thumb:hover,
 .modal-sheet::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-text);
 }
