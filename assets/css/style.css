@@ -1075,6 +1075,19 @@ p {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
 }
 
+@keyframes reveal-flip-in {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.reveal-card-img.flip-in {
+  animation: reveal-flip-in 0.45s cubic-bezier(0, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-card-img.flip-in { animation-duration: 0.01s; }
+}
+
 .reveal-text {
   font-family: 'DM Sans', sans-serif;
   font-size: 18px;

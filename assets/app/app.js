@@ -710,6 +710,9 @@ async function renderTirageReveal() {
 
   dom.revealCardImg.src = ALL_CARDS[tirageCardId].imageUrl;
   dom.revealCardImg.alt = cardName;
+  dom.revealCardImg.classList.remove('flip-in');
+  void dom.revealCardImg.offsetWidth;
+  dom.revealCardImg.classList.add('flip-in');
 
   const DOMAIN_H3_INDEX = { amour: 0, travail: 1, argent: 2, famille: 3, spiritualite: 4 };
   const h3Index = DOMAIN_H3_INDEX[currentDomain] ?? 0;
