@@ -682,15 +682,13 @@ async function playTcAnim(n, onComplete) {
   const deckEl = document.getElementById('tc-deck');
   if (!deckEl) return;
   buildTcDeck(deckEl, n);
-  await tcSleep(400);
+  await tcSleep(300);
   const cards = Array.from(deckEl.children);
   for (let k = cards.length - 1; k >= 1; k--) {
     cards[k].classList.add('tc-fading');
-    await tcSleep(380);
+    await tcSleep(330);
   }
-  await tcSleep(250);
-  cards[0].classList.add('tc-flipping');
-  await tcSleep(750);
+  await tcSleep(300);
   onComplete();
 }
 
