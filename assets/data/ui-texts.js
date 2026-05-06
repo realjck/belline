@@ -15,6 +15,7 @@ const UI_TEXTS = {
     'domain-famille': 'Famille',
     'domain-spiritualite': 'Spiritualité',
     'screen-chiffre-title': 'Concentrez-vous sur la question et choisissez un chiffre',
+    'btn-nouveau-tirage': 'Nouveau tirage',
 
     // Group names (planets)
     'group-4premières': 'Les 4 premières',
@@ -63,6 +64,7 @@ const UI_TEXTS = {
     'domain-famille': 'Family',
     'domain-spiritualite': 'Spirituality',
     'screen-chiffre-title': 'Focus on the question and choose a number',
+    'btn-nouveau-tirage': 'New Reading',
 
     // Group names (planets)
     'group-4premières': 'First Four',
