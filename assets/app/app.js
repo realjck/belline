@@ -64,7 +64,7 @@ function cacheDOM() {
 
   // Card text screen
   dom.cardTextContent = document.getElementById('card-text-content');
-  dom.btTextBack = document.getElementById('bt-text-back');
+
   dom.arrPrevText = document.getElementById('arr-prev-text');
 
   // Modals
@@ -149,15 +149,13 @@ function applyLanguage() {
   dom.btStart.textContent = txt('btn-cards');
 
   // Header/Navigation buttons
-  dom.btHome.setAttribute('aria-label', txt('btn-back-to-cards'));
   dom.btSettings.setAttribute('aria-label', txt('btn-settings'));
   dom.btInfo.setAttribute('aria-label', txt('btn-info'));
   dom.btTheme.setAttribute('aria-label', txt('btn-theme'));
 
   // Large card screen
 
-  // Text screen
-  dom.btTextBack.textContent = txt('btn-back-to-cards');
+
 
   // Modals
   dom.modalSettingsTitle.textContent = txt('settings-title');
@@ -528,8 +526,21 @@ function setupEventListeners() {
   dom.arrNext.addEventListener('click', () => { renderCardText(); goTo(3); playSound('click'); });
 
   // Text screen
-  dom.arrPrevText.addEventListener('click', () => { goTo(1); playSound('back'); });
-  dom.btTextBack.addEventListener('click', () => { goTo(2); playSound('back'); });
+  dom.arrPrevText.addEventListener('click', () => { goTo(2); playSound('back'); });
+
+  let ctScrolled = false;
+  let ctStartY = 0;
+  dom.cardTextContent.addEventListener('touchstart', e => {
+    ctStartY = e.touches[0].clientY;
+    ctScrolled = false;
+  }, { passive: true });
+  dom.cardTextContent.addEventListener('touchmove', e => {
+    if (Math.abs(e.touches[0].clientY - ctStartY) > 8) ctScrolled = true;
+  }, { passive: true });
+  dom.cardTextContent.addEventListener('click', () => {
+    if (ctScrolled) return;
+    goTo(2); playSound('back');
+  });
 
   // Settings modal
   dom.settingsLangEn.addEventListener('click', () => switchLang('en'));
