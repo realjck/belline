@@ -51,14 +51,14 @@ const CARD_NAMES = {
     'Infortune', 'Stérilité', 'Fatalité', 'Grâce', 'Ruine', 'Retard', 'Cloître'
   ],
   en: [
-    'Carte bleue', 'La Destinée', "L'étoile de l'homme", "L'étoile de la femme",
-    'Nativité', 'Réussite', 'Élévation', 'Honneurs', 'Pensée Amitié', 'Campagne Santé', 'Présents',
-    'Trahison', 'Départ', 'Inconstance', 'Découverte', "L'eau", 'Les pénates', 'Maladie',
-    'Changement', 'Argent', 'Intelligence', 'Vol Perte', 'Entreprises', 'Trafic', 'Nouvelle',
-    'Plaisirs', 'Paix', 'Union', 'Famille', 'Amor', 'La table', 'Passions',
-    'Méchanceté', 'Procès', 'Despotisme', 'Ennemis', 'Pourparlers', 'Feu', 'Accident',
-    'Appui', 'Beauté', 'Héritage', 'Sagesse', 'La renommée', 'Le hasard', 'Bonheur',
-    'Infortune', 'Stérilité', 'Fatalité', 'Grâce', 'Ruine', 'Retard', 'Cloître'
+    'Blue Card', 'Destiny', "The Man's Star", "The Woman's Star",
+    'Nativity', 'Success', 'Elevation', 'Honours', 'Thought & Friendship', 'Country & Health', 'Gifts',
+    'Betrayal', 'Departure', 'Inconstancy', 'Discovery', 'Water', 'The Penates', 'Illness',
+    'Change', 'Money', 'Intelligence', 'Theft & Loss', 'Enterprise', 'Commerce', 'News',
+    'Pleasures', 'Peace', 'Union', 'Family', 'Love', 'The Table', 'Passions',
+    'Wickedness', 'Lawsuit', 'Despotism', 'Enemies', 'Negotiations', 'Fire', 'Accident',
+    'Support', 'Beauty', 'Inheritance', 'Wisdom', 'Renown', 'Chance', 'Happiness',
+    'Misfortune', 'Sterility', 'Fatality', 'Grace', 'Ruin', 'Delay', 'Cloister'
   ]
 };
 
