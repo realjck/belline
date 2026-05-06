@@ -12,6 +12,7 @@ let currentScreen = 0;
 let currentCardId = 0;
 let currentDomain = null;
 let currentNumber = null;
+let tirageCardId = null;
 const H3_SYMBOLS = ['♡', '⌬', '❖', 'ᗑ', '☸︎'];
 
 const screenMap = {
@@ -21,7 +22,9 @@ const screenMap = {
   3: 's-card-text',
   4: 's-tirage-choix',
   5: 's-tirage-domaine',
-  6: 's-tirage-chiffre'
+  6: 's-tirage-chiffre',
+  7: 's-tirage-anim',
+  8: 's-tirage-reveal'
 };
 
 // ──── DOM ELEMENT CACHE ────
@@ -92,6 +95,11 @@ function cacheDOM() {
   dom.tirageChiffreTitle = document.getElementById('tirage-chiffre-title');
   dom.arrTirageChiffreBack = document.getElementById('arr-tirage-chiffre-back');
   dom.tirageNumbers = document.getElementById('tirage-numbers');
+  dom.revealHeader    = document.getElementById('reveal-header');
+  dom.revealCardImg   = document.getElementById('reveal-card-img');
+  dom.revealText      = document.getElementById('reveal-text');
+  dom.arrRevealBack   = document.getElementById('arr-reveal-back');
+  dom.btNouveauTirage = document.getElementById('bt-nouveau-tirage');
 }
 
 // ──── INITIALIZATION ────
@@ -183,6 +191,7 @@ function applyLanguage() {
 
   // Screen 6 — Chiffre
   dom.tirageChiffreTitle.textContent = txt('screen-chiffre-title');
+  dom.btNouveauTirage.textContent = txt('btn-nouveau-tirage');
 }
 
 function applyTheme() {
