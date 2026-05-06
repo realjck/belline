@@ -941,7 +941,7 @@ p {
 
 #s-tirage-anim {
   --tc-bg: var(--color-bg);
-  --tc-fg: var(--color-text);
+  --tc-fg: var(--color-accent);
   --tc-card-w: 38px;
   --tc-card-h: 56px;
 }
