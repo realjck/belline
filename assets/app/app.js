@@ -445,6 +445,11 @@ async function renderCardText() {
         square.style.background = groupColor;
         square.textContent = groupSymbol;
         h1.insertBefore(square, h1.firstChild);
+
+        const label = document.createElement('span');
+        label.style.color = groupColor;
+        label.textContent = txt(`group-${groupName}`) + ' ';
+        h1.insertBefore(label, square.nextSibling);
       }
     }
 
