@@ -10,13 +10,18 @@ let currentTheme = 'light';
 let soundEnabled = true;
 let currentScreen = 0;
 let currentCardId = 0;
+let currentDomain = null;
+let currentNumber = null;
 const H3_SYMBOLS = ['♡', '⌬', '❖', 'ᗑ', '☸︎'];
 
 const screenMap = {
   0: 's-home',
   1: 's-cards',
   2: 's-card-large',
-  3: 's-card-text'
+  3: 's-card-text',
+  4: 's-tirage-choix',
+  5: 's-tirage-domaine',
+  6: 's-tirage-chiffre'
 };
 
 // ──── DOM ELEMENT CACHE ────
@@ -76,6 +81,17 @@ function cacheDOM() {
   dom.settingsLangFr = document.getElementById('settings-lang-fr');
   dom.settingsSoundOn = document.getElementById('settings-sound-on');
   dom.settingsSoundOff = document.getElementById('settings-sound-off');
+
+  // Tirage
+  dom.btTirage = document.getElementById('bt-tirage');
+  dom.btUneCarte = document.getElementById('bt-una-carte');
+  dom.btTirageCroix = document.getElementById('bt-tirage-croix');
+  dom.arrTirageChoixBack = document.getElementById('arr-tirage-choix-back');
+  dom.tirageDomainTitle = document.getElementById('tirage-domaine-title');
+  dom.arrTirageDomaineBack = document.getElementById('arr-tirage-domaine-back');
+  dom.tirageChiffreTitle = document.getElementById('tirage-chiffre-title');
+  dom.arrTirageChiffreBack = document.getElementById('arr-tirage-chiffre-back');
+  dom.tirageNumbers = document.getElementById('tirage-numbers');
 }
 
 // ──── INITIALIZATION ────
@@ -150,6 +166,22 @@ function applyLanguage() {
   dom.settingsLangFr.textContent = txt('lang-fr');
   dom.settingsSoundOn.textContent = txt('sound-on');
   dom.settingsSoundOff.textContent = txt('sound-off');
+
+  // Home tirage button
+  dom.btTirage.textContent = txt('btn-tirage');
+
+  // Screen 4 — Choix
+  dom.btUneCarte.textContent = txt('btn-una-carte');
+  dom.btTirageCroix.textContent = txt('btn-tirage-croix');
+
+  // Screen 5 — Domaine
+  dom.tirageDomainTitle.textContent = txt('screen-domaine-title');
+  document.querySelectorAll('.domain-label[data-key]').forEach(el => {
+    el.textContent = txt(el.dataset.key);
+  });
+
+  // Screen 6 — Chiffre
+  dom.tirageChiffreTitle.textContent = txt('screen-chiffre-title');
 }
 
 function applyTheme() {
