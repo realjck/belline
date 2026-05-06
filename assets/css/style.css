@@ -1039,9 +1039,7 @@ p {
 .tirage-reveal-body {
   gap: 16px;
   justify-content: flex-start;
-  max-width: 520px;
   width: 100%;
-  margin: 0 auto;
   min-height: 0;
 }
 
