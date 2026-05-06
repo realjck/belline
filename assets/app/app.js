@@ -669,6 +669,7 @@ function buildTcDeck(deckEl, n) {
 
 async function playTcAnim(n, onComplete) {
   const deckEl = document.getElementById('tc-deck');
+  if (!deckEl) return;
   buildTcDeck(deckEl, n);
   await tcSleep(400);
   const cards = Array.from(deckEl.children);
@@ -691,7 +692,7 @@ async function renderTirageReveal() {
   const cardName    = getCardName(tirageCardId, currentLang);
   const groupLabel  = groupName ? txt(`group-${groupName}`) : '';
   const square = groupColor
-    ? `<span class="planet-color-square" style="background:${groupColor}">${groupSymbol}</span> `
+    ? `<span class="planet-color-square" style="background:${groupColor}">${groupSymbol || ''}</span> `
     : '';
   const label = groupLabel ? `${groupLabel} ` : '';
   dom.revealHeader.innerHTML = `${square}${label}${tirageCardId} / ${cardName}`;
@@ -703,7 +704,9 @@ async function renderTirageReveal() {
   const h3Index = DOMAIN_H3_INDEX[currentDomain] ?? 0;
   const cardIdStr = String(tirageCardId).padStart(2, '0');
   try {
-    const md = await fetch(`./assets/data/book/${currentLang}/${cardIdStr}.md`).then(r => r.text());
+    const r = await fetch(`./assets/data/book/${currentLang}/${cardIdStr}.md`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const md = await r.text();
     const tmp = document.createElement('div');
     tmp.innerHTML = marked.parse(md);
     const h3s = tmp.querySelectorAll('h3');
