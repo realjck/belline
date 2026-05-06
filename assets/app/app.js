@@ -362,7 +362,8 @@ function renderCards() {
       const groupColor = getGroupColor(groupName);
       const groupSymbol = getGroupSymbol(groupName);
       const square = groupColor ? `<span class="group-color-square" style="background:${groupColor}">${groupSymbol || ''}</span>` : '';
-      headerDiv.innerHTML = `${square}<span>${txt(groupTextKey)}</span>`;
+      const label = groupColor ? `<span style="color:${groupColor}">${txt(groupTextKey)}</span>` : `<span>${txt(groupTextKey)}</span>`;
+      headerDiv.innerHTML = `${square}${label}`;
       if (groupColor) headerDiv.style.borderBottomColor = groupColor;
 
       dom.cardsGallery.appendChild(headerDiv);
