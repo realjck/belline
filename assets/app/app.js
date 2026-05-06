@@ -13,6 +13,7 @@ let currentCardId = 0;
 let currentDomain = null;
 let currentNumber = null;
 let tirageCardId = null;
+let tcAnimCancelled = false;
 const H3_SYMBOLS = ['♡', '⌬', '❖', 'ᗑ', '☸︎'];
 
 const screenMap = {
@@ -504,6 +505,7 @@ function closeInfoModal() {
 function setupEventListeners() {
   // Header buttons
   dom.btHome.addEventListener('click', () => {
+    tcAnimCancelled = true;
     dom.cardsGallery.scrollTop = 0;
     goTo(0);
     playSound('back');
@@ -695,16 +697,20 @@ function buildTcDeck(deckEl, n) {
 }
 
 async function playTcAnim(n, onComplete) {
+  tcAnimCancelled = false;
   const deckEl = document.getElementById('tc-deck');
   if (!deckEl) return;
   buildTcDeck(deckEl, n);
   await tcSleep(300);
+  if (tcAnimCancelled) return;
   const cards = Array.from(deckEl.children);
   for (let k = cards.length - 1; k >= 1; k--) {
     cards[k].classList.add('tc-fading');
     await tcSleep(330);
+    if (tcAnimCancelled) return;
   }
   await tcSleep(300);
+  if (tcAnimCancelled) return;
   onComplete();
 }
 
