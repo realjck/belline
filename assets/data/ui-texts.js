@@ -28,7 +28,7 @@ const UI_TEXTS = {
     'group-Saturne': 'Saturne',
 
     // Button labels
-    'btn-back-to-cards': 'Revenir aux cartes',
+    'btn-back-to-cards': 'Revenir à la carte',
     'btn-settings': 'Préférences',
     'btn-info': 'À propos',
     'btn-theme': 'Thème',
@@ -77,7 +77,7 @@ const UI_TEXTS = {
     'group-Saturne': 'Saturn',
 
     // Button labels
-    'btn-back-to-cards': 'Back to Cards',
+    'btn-back-to-cards': 'Back to Card',
     'btn-settings': 'Settings',
     'btn-info': 'About',
     'btn-theme': 'Theme',

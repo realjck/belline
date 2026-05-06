@@ -524,8 +524,8 @@ function setupEventListeners() {
   dom.arrNext.addEventListener('click', () => { renderCardText(); goTo(3); playSound('click'); });
 
   // Text screen
-  dom.arrPrevText.addEventListener('click', () => { goTo(2); playSound('back'); });
-  dom.btTextBack.addEventListener('click', () => { goTo(1); playSound('back'); });
+  dom.arrPrevText.addEventListener('click', () => { goTo(1); playSound('back'); });
+  dom.btTextBack.addEventListener('click', () => { goTo(2); playSound('back'); });
 
   // Settings modal
   dom.settingsLangEn.addEventListener('click', () => switchLang('en'));
