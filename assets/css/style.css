@@ -203,7 +203,7 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 12px;
   flex: 1;
   padding: 24px;
   max-width: 720px;
@@ -213,13 +213,13 @@ img {
 
 .home-title {
   font-family: 'Big Shoulders Display', sans-serif;
-  font-size: 64px;
+  font-size: 52px;
   font-weight: 700;
   line-height: 0.95;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .home-logo {
@@ -232,11 +232,11 @@ img {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   opacity: 0.9;
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .btn-start {
-  margin-top: 40px;
+  margin-top: 0;
   padding: 14px 44px;
   border-radius: 9999px;
   border: 1.5px solid var(--color-accent);
@@ -251,6 +251,13 @@ img {
   transition: background .2s, color .2s;
 }
 .btn-start:active { background: var(--color-accent); color: var(--color-bg); }
+
+.home-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
 
 .btn-action {
   width: auto;
