@@ -615,8 +615,8 @@ function setupEventListeners() {
   });
 
   // Screen 8 — Reveal
-  dom.arrRevealBack.addEventListener('click', () => { goTo(5); playSound('back'); });
-  dom.btNouveauTirage.addEventListener('click', () => { goTo(6); playSound('click'); });
+  dom.arrRevealBack.addEventListener('click', () => { goTo(6); playSound('back'); });
+  dom.btNouveauTirage.addEventListener('click', () => { goTo(5); playSound('click'); });
 }
 
 // ──── TIRAGE ANIMATION ────
