@@ -95,10 +95,10 @@ function cacheDOM() {
   dom.tirageChiffreTitle = document.getElementById('tirage-chiffre-title');
   dom.arrTirageChiffreBack = document.getElementById('arr-tirage-chiffre-back');
   dom.tirageNumbers = document.getElementById('tirage-numbers');
-  dom.revealHeader    = document.getElementById('reveal-header');
-  dom.revealCardImg   = document.getElementById('reveal-card-img');
-  dom.revealText      = document.getElementById('reveal-text');
-  dom.arrRevealBack   = document.getElementById('arr-reveal-back');
+  dom.revealHeader = document.getElementById('reveal-header');
+  dom.revealCardImg = document.getElementById('reveal-card-img');
+  dom.revealText = document.getElementById('reveal-text');
+  dom.arrRevealBack = document.getElementById('arr-reveal-back');
   dom.btNouveauTirage = document.getElementById('bt-nouveau-tirage');
 }
 
