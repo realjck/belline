@@ -1006,6 +1006,10 @@ p {
 
 .tc-back::after {
   content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
   width: 10px;
   height: 10px;
   background: var(--tc-bg);
@@ -1042,10 +1046,8 @@ p {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   max-width: 100%;
+  overflow: hidden;
 }
 
 .reveal-card-img {
