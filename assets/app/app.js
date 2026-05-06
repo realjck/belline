@@ -84,7 +84,7 @@ function cacheDOM() {
 
   // Tirage
   dom.btTirage = document.getElementById('bt-tirage');
-  dom.btUneCarte = document.getElementById('bt-una-carte');
+  dom.btUneCarte = document.getElementById('bt-une-carte');
   dom.btTirageCroix = document.getElementById('bt-tirage-croix');
   dom.arrTirageChoixBack = document.getElementById('arr-tirage-choix-back');
   dom.tirageDomainTitle = document.getElementById('tirage-domaine-title');
@@ -171,7 +171,7 @@ function applyLanguage() {
   dom.btTirage.textContent = txt('btn-tirage');
 
   // Screen 4 — Choix
-  dom.btUneCarte.textContent = txt('btn-una-carte');
+  dom.btUneCarte.textContent = txt('btn-une-carte');
   dom.btTirageCroix.textContent = txt('btn-tirage-croix');
 
   // Screen 5 — Domaine
