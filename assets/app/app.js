@@ -57,7 +57,6 @@ function cacheDOM() {
   // Card large screen
   dom.cardLargeImage = document.getElementById('card-large-image');
   dom.cardLargeHeader = document.getElementById('card-large-header');
-  dom.cardLargePlanet = document.getElementById('card-large-planet');
   dom.cardLargeContainer = document.querySelector('.card-large-container');
   dom.cardLargeInfoEl = document.querySelector('.card-large-info');
   dom.arrPrev = document.getElementById('arr-prev');
@@ -390,21 +389,16 @@ function renderCards() {
 function renderCardLarge() {
   const card = ALL_CARDS[currentCardId];
   const groupName = getGroupNameForCardId(currentCardId);
-
-  // Title above the card
   const cardName = getCardName(currentCardId, currentLang);
-  dom.cardLargeHeader.textContent = `${currentCardId} / ${cardName}`;
-
-  // Card image
-  dom.cardLargeImage.src = card.imageUrl;
-  dom.cardLargeImage.alt = cardName;
-
-  // Planet group below the card
   const groupColor = getGroupColor(groupName);
   const groupSymbol = getGroupSymbol(groupName);
   const groupLabel = groupName ? txt(`group-${groupName}`) : '';
   const square = groupColor ? `<span class="planet-color-square" style="background:${groupColor}">${groupSymbol || ''}</span>` : '';
-  dom.cardLargePlanet.innerHTML = groupLabel ? `${square}<span>${groupLabel}</span>` : '';
+  const label = groupLabel ? `<span style="color:${groupColor}">${groupLabel}</span> ` : '';
+  dom.cardLargeHeader.innerHTML = `${square}${label}${currentCardId} / ${cardName}`;
+
+  dom.cardLargeImage.src = card.imageUrl;
+  dom.cardLargeImage.alt = cardName;
 
   // Update navigation buttons
 
