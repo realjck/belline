@@ -213,6 +213,8 @@ function switchLang(lang) {
     renderCardLarge();
   } else if (currentScreen === 3) {
     renderCardText();
+  } else if (currentScreen === 8 && tirageCardId !== null) {
+    renderTirageReveal();
   }
 
   playSound('click');
