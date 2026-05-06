@@ -5,6 +5,16 @@ const UI_TEXTS = {
     'home-subtitle': 'Tirages et interprétations des cartes',
     'btn-cards': 'Les cartes',
     'btn-oracle': 'Consulter l\'oracle',
+    'btn-tirage': 'Tirage',
+    'btn-une-carte': 'Une seule carte',
+    'btn-tirage-croix': 'Tirage en croix',
+    'screen-domaine-title': 'Sur quoi porte votre question ?',
+    'domain-amour': 'Amour / Sentimental',
+    'domain-travail': 'Travail / Professionnel',
+    'domain-argent': 'Argent / Financier',
+    'domain-famille': 'Famille',
+    'domain-spiritualite': 'Spiritualité',
+    'screen-chiffre-title': 'Choisissez un chiffre',
 
     // Group names (planets)
     'group-4premières': 'Les 4 premières',
@@ -43,6 +53,16 @@ const UI_TEXTS = {
     'home-subtitle': 'Companion App',
     'btn-cards': 'Cards',
     'btn-oracle': 'Query Oracle',
+    'btn-tirage': 'Reading',
+    'btn-une-carte': 'Single Card',
+    'btn-tirage-croix': 'Cross Reading',
+    'screen-domaine-title': 'What is your question about?',
+    'domain-amour': 'Love / Relationships',
+    'domain-travail': 'Work / Professional',
+    'domain-argent': 'Money / Financial',
+    'domain-famille': 'Family',
+    'domain-spiritualite': 'Spirituality',
+    'screen-chiffre-title': 'Choose a number',
 
     // Group names (planets)
     'group-4premières': 'First Four',
