@@ -626,6 +626,100 @@ function initTirageAnimation() {
   }
 }
 
+// ──── TIRAGE CARD DRAW ────
+
+function drawTirageCard() {
+  const buf = new Uint32Array(1);
+  crypto.getRandomValues(buf);
+  tirageCardId = buf[0] % 53;
+}
+
+// ──── TIRAGE CARD ANIMATION (tc-*) ────
+
+const tcSleep = ms => new Promise(r => setTimeout(r, ms));
+
+function tcJitter(i) {
+  const r = x => x - Math.floor(x);
+  return {
+    tx:  (r(Math.sin(i * 12.9898) * 43758.5453) - 0.5) * 4,
+    ty:  (r(Math.sin(i * 78.233)  * 43758.5453) - 0.5) * 4,
+    rot: (r(Math.sin(i * 39.346)  * 43758.5453) - 0.5) * 6
+  };
+}
+
+function buildTcDeck(deckEl, n) {
+  deckEl.innerHTML = '';
+  const total = n + 1;
+  for (let i = 0; i < total; i++) {
+    const card = document.createElement('div');
+    card.className = 'tc-card';
+    const j = tcJitter(i);
+    const isFinal = i === 0;
+    card.style.setProperty('--tx',  isFinal ? '0px'  : j.tx  + 'px');
+    card.style.setProperty('--ty',  isFinal ? '0px'  : j.ty  + 'px');
+    card.style.setProperty('--rot', isFinal ? '0deg' : j.rot + 'deg');
+    card.style.zIndex = String(i + 1);
+    const back  = document.createElement('div'); back.className  = 'tc-face tc-back';
+    const front = document.createElement('div'); front.className = 'tc-face tc-front';
+    card.appendChild(front);
+    card.appendChild(back);
+    deckEl.appendChild(card);
+  }
+}
+
+async function playTcAnim(n, onComplete) {
+  const deckEl = document.getElementById('tc-deck');
+  buildTcDeck(deckEl, n);
+  await tcSleep(400);
+  const cards = Array.from(deckEl.children);
+  for (let k = cards.length - 1; k >= 1; k--) {
+    cards[k].classList.add('tc-fading');
+    await tcSleep(380);
+  }
+  await tcSleep(250);
+  cards[0].classList.add('tc-flipping');
+  await tcSleep(750);
+  onComplete();
+}
+
+// ──── TIRAGE REVEAL RENDERING ────
+
+async function renderTirageReveal() {
+  const groupName   = getGroupNameForCardId(tirageCardId);
+  const groupColor  = getGroupColor(groupName);
+  const groupSymbol = getGroupSymbol(groupName);
+  const cardName    = getCardName(tirageCardId, currentLang);
+  const groupLabel  = groupName ? txt(`group-${groupName}`) : '';
+  const square = groupColor
+    ? `<span class="planet-color-square" style="background:${groupColor}">${groupSymbol}</span> `
+    : '';
+  const label = groupLabel ? `${groupLabel} ` : '';
+  dom.revealHeader.innerHTML = `${square}${label}${tirageCardId} / ${cardName}`;
+
+  dom.revealCardImg.src = ALL_CARDS[tirageCardId].imageUrl;
+  dom.revealCardImg.alt = cardName;
+
+  const DOMAIN_H3_INDEX = { amour: 0, travail: 1, argent: 2, famille: 3, spiritualite: 4 };
+  const h3Index = DOMAIN_H3_INDEX[currentDomain] ?? 0;
+  const cardIdStr = String(tirageCardId).padStart(2, '0');
+  try {
+    const md = await fetch(`./assets/data/book/${currentLang}/${cardIdStr}.md`).then(r => r.text());
+    const tmp = document.createElement('div');
+    tmp.innerHTML = marked.parse(md);
+    const h3s = tmp.querySelectorAll('h3');
+    const targetH3 = h3s[h3Index];
+    let text = '';
+    if (targetH3) {
+      let sib = targetH3.nextElementSibling;
+      while (sib && sib.tagName !== 'P') sib = sib.nextElementSibling;
+      if (sib) text = sib.textContent;
+    }
+    dom.revealText.textContent = text;
+  } catch {
+    dom.revealText.textContent = '';
+  }
+}
+
 // ──── BOOTSTRAP ────
 
 document.addEventListener('DOMContentLoaded', init);
