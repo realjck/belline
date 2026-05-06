@@ -103,6 +103,7 @@ function init() {
   applyLanguage();
   setupEventListeners();
   renderHome();
+  initTirageAnimation();
   goTo(0);
 }
 
@@ -555,6 +556,65 @@ function setupEventListeners() {
       }
     }
   });
+
+  // Home — tirage button
+  dom.btTirage.addEventListener('click', () => {
+    goTo(4);
+    playSound('click');
+  });
+
+  // Screen 4 — Choix
+  dom.arrTirageChoixBack.addEventListener('click', () => {
+    goTo(0);
+    playSound('back');
+  });
+  dom.btUneCarte.addEventListener('click', () => {
+    goTo(5);
+    playSound('click');
+  });
+
+  // Screen 5 — Domaine
+  dom.arrTirageDomaineBack.addEventListener('click', () => {
+    goTo(4);
+    playSound('back');
+  });
+  document.querySelectorAll('.btn-domain').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentDomain = btn.dataset.domain;
+      goTo(6);
+      playSound('click');
+    });
+  });
+
+  // Screen 6 — Chiffres
+  dom.arrTirageChiffreBack.addEventListener('click', () => {
+    goTo(5);
+    playSound('back');
+  });
+  dom.tirageNumbers.addEventListener('click', (e) => {
+    const btn = e.target.closest('.num-btn');
+    if (!btn) return;
+    currentNumber = parseInt(btn.dataset.num, 10);
+    playSound('click');
+  });
+}
+
+// ──── TIRAGE ANIMATION ────
+
+function initTirageAnimation() {
+  const ticks = document.getElementById('ta-ticks');
+  if (!ticks) return;
+  const N = 24;
+  for (let i = 0; i < N; i++) {
+    const tick = document.createElement('i');
+    tick.style.transform = `translateX(-50%) rotate(${(360 / N) * i}deg)`;
+    tick.style.transformOrigin = `50% calc(var(--ta-size) / 2)`;
+    if (i % 6 === 0) {
+      tick.style.height = '10px';
+      tick.style.width = '2.5px';
+    }
+    ticks.appendChild(tick);
+  }
 }
 
 // ──── BOOTSTRAP ────
