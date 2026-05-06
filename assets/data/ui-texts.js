@@ -6,15 +6,15 @@ const UI_TEXTS = {
     'btn-cards': 'Les cartes',
     'btn-oracle': 'Consulter l\'oracle',
     'btn-tirage': 'Tirage',
-    'btn-une-carte': 'Une seule carte',
+    'btn-une-carte': 'Carte unique',
     'btn-tirage-croix': 'Tirage en croix',
     'screen-domaine-title': 'Sur quoi porte votre question ?',
     'domain-amour': 'Amour / Sentimental',
     'domain-travail': 'Travail / Professionnel',
-    'domain-argent': 'Argent / Financier',
+    'domain-argent': 'Financier / Matériel',
     'domain-famille': 'Famille',
     'domain-spiritualite': 'Spiritualité',
-    'screen-chiffre-title': 'Choisissez un chiffre',
+    'screen-chiffre-title': 'Concentrez-vous sur la question et choisissez un chiffre',
 
     // Group names (planets)
     'group-4premières': 'Les 4 premières',
@@ -59,10 +59,10 @@ const UI_TEXTS = {
     'screen-domaine-title': 'What is your question about?',
     'domain-amour': 'Love / Relationships',
     'domain-travail': 'Work / Professional',
-    'domain-argent': 'Money / Financial',
+    'domain-argent': 'Financial / Material',
     'domain-famille': 'Family',
     'domain-spiritualite': 'Spirituality',
-    'screen-chiffre-title': 'Choose a number',
+    'screen-chiffre-title': 'Focus on the question and choose a number',
 
     // Group names (planets)
     'group-4premières': 'First Four',
