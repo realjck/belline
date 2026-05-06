@@ -846,3 +846,294 @@ p {
 .modal-sheet::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-text);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   TIRAGE SCREENS (4, 5, 6)
+   ═══════════════════════════════════════════════════════════ */
+
+.tirage-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex: 1;
+  padding: 24px;
+}
+
+.btn-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Screen 5 — Domain */
+.tirage-domaine-title {
+  font-size: 17px;
+  color: var(--color-muted);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.btn-domain {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(80%, 400px);
+  text-align: left;
+}
+
+.domain-glyph {
+  font-family: 'Segoe UI Symbol', sans-serif;
+  font-size: 18px;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+/* Screen 6 — Chiffres */
+.tirage-chiffre-body {
+  gap: 24px;
+}
+
+.tirage-chiffre-title {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+#tirage-animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tirage-numbers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.tirage-numbers-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.num-btn {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TIRAGE ANIMATION (ta-* prefix, scoped to avoid conflicts)
+   ═══════════════════════════════════════════════════════════ */
+
+.tirage-anim {
+  --ta-bg: var(--color-bg);
+  --ta-fg: var(--color-accent);
+  --ta-size: 200px;
+  --ta-stroke: 2px;
+  --ta-orbit-1: 38px;
+  --ta-orbit-2: 60px;
+  --ta-orbit-3: 82px;
+
+  width: var(--ta-size);
+  height: var(--ta-size);
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.ta-disc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: var(--ta-stroke) solid var(--ta-fg);
+  animation: ta-spin 4.5s linear infinite;
+}
+
+.ta-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  border-radius: 50%;
+  border: 1.5px dashed var(--ta-fg);
+  opacity: 0.4;
+  transform: translate(-50%, -50%);
+}
+.ta-r1 { width: calc(var(--ta-orbit-1) * 2); height: calc(var(--ta-orbit-1) * 2); }
+.ta-r2 { width: calc(var(--ta-orbit-2) * 2); height: calc(var(--ta-orbit-2) * 2); }
+.ta-r3 { width: calc(var(--ta-orbit-3) * 2); height: calc(var(--ta-orbit-3) * 2); }
+
+.ta-ticks {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  animation: ta-spin 15s linear infinite reverse;
+}
+.ta-ticks i {
+  position: absolute;
+  top: 0; left: 50%;
+  width: 2px; height: 6px;
+  background: var(--ta-fg);
+  transform-origin: 50% calc(var(--ta-size) / 2);
+}
+
+.ta-card-wrap {
+  position: absolute;
+  width: 38px;
+  height: 56px;
+  perspective: 400px;
+  z-index: 4;
+}
+.ta-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: ta-card-flip 1s ease-in-out infinite;
+}
+.ta-card-face {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--ta-fg);
+  border-radius: 4px;
+  background: var(--ta-bg);
+  backface-visibility: hidden;
+  display: grid;
+  place-items: center;
+}
+.ta-front {
+  background:
+    repeating-linear-gradient(45deg,
+      var(--ta-fg) 0 1.5px,
+      transparent 1.5px 5px),
+    var(--ta-bg);
+}
+.ta-front::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1.5px solid var(--ta-bg);
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1.5px var(--ta-fg);
+}
+.ta-front::after {
+  content: "";
+  width: 10px; height: 10px;
+  background: var(--ta-bg);
+  border: 1.5px solid var(--ta-fg);
+  transform: rotate(45deg);
+  z-index: 1;
+}
+.ta-back {
+  transform: rotateY(180deg);
+  font-size: 22px;
+  font-weight: 700;
+  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  color: var(--ta-fg);
+}
+.ta-back::before { content: "?"; }
+
+.ta-orbit {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+}
+.ta-orbit > .ta-body { position: absolute; }
+
+.ta-orbit.ta-sun { animation: ta-spin 4.5s linear infinite; }
+.ta-orbit.ta-sun > .ta-body {
+  top: calc(var(--ta-orbit-3) * -1);
+  animation: ta-counter-spin 4.5s linear infinite;
+}
+
+.ta-sun-icon { width: 22px; height: 22px; position: relative; }
+.ta-sun-icon .ta-core {
+  position: absolute; inset: 5px;
+  border-radius: 50%;
+  background: var(--ta-fg);
+}
+.ta-sun-icon .ta-ray {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 3px; height: 24px;
+  background: var(--ta-fg);
+  transform-origin: center;
+  border-radius: 1.5px;
+  margin-left: -1.5px;
+  margin-top: -12px;
+}
+.ta-sun-icon .ta-ray:nth-child(2) { transform: rotate(0deg); }
+.ta-sun-icon .ta-ray:nth-child(3) { transform: rotate(45deg); }
+.ta-sun-icon .ta-ray:nth-child(4) { transform: rotate(90deg); }
+.ta-sun-icon .ta-ray:nth-child(5) { transform: rotate(135deg); }
+
+.ta-orbit.ta-moon { animation: ta-spin 3.25s linear infinite reverse; }
+.ta-orbit.ta-moon > .ta-body {
+  top: calc(var(--ta-orbit-2) * -1);
+  animation: ta-counter-spin-rev 3.25s linear infinite;
+}
+.ta-moon-icon {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--ta-fg);
+  -webkit-mask: radial-gradient(circle 9px at 14px 10px, transparent 98%, #000 100%);
+          mask: radial-gradient(circle 9px at 14px 10px, transparent 98%, #000 100%);
+  transform: rotate(-25deg);
+}
+
+.ta-orbit.ta-star {
+  animation: ta-spin var(--ta-dur, 5s) linear infinite var(--ta-dir, normal);
+}
+.ta-orbit.ta-star > .ta-body {
+  top: calc(var(--ta-r, var(--ta-orbit-1)) * -1);
+  animation: ta-counter-spin var(--ta-dur, 5s) linear infinite var(--ta-dir, normal);
+}
+
+.ta-star-icon {
+  width: var(--ta-s, 10px);
+  height: var(--ta-s, 10px);
+  position: relative;
+}
+.ta-star-icon::before,
+.ta-star-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ta-fg);
+  clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%);
+}
+.ta-star-icon::after {
+  transform: scale(0.5) rotate(45deg);
+  opacity: 0.85;
+}
+
+@keyframes ta-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes ta-counter-spin {
+  from { transform: translate(-50%, 0) rotate(0deg); }
+  to   { transform: translate(-50%, 0) rotate(-360deg); }
+}
+@keyframes ta-counter-spin-rev {
+  from { transform: translate(-50%, 0) rotate(0deg); }
+  to   { transform: translate(-50%, 0) rotate(360deg); }
+}
+@keyframes ta-card-flip {
+  0%   { transform: rotateY(0deg); }
+  45%  { transform: rotateY(180deg); }
+  50%  { transform: rotateY(180deg); }
+  95%  { transform: rotateY(360deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ta-disc, .ta-ticks, .ta-orbit, .ta-orbit > .ta-body, .ta-card {
+    animation-duration: 60s !important;
+  }
+}
