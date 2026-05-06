@@ -261,7 +261,8 @@ function updateSettingsDisplay() {
 function playSound(type) {
   if (!soundEnabled) return;
 
-  const soundFile = type === 'click' ? './assets/sounds/click.mp3' : './assets/sounds/back.mp3';
+  const soundMap = { click: './assets/sounds/click.mp3', back: './assets/sounds/back.mp3', belline: './assets/sounds/belline.mp3' };
+  const soundFile = soundMap[type] ?? soundMap.click;
   const audio = new Audio(soundFile);
   audio.play().catch(() => {
     // Silently fail if sound doesn't exist or can't play
@@ -607,10 +608,10 @@ function setupEventListeners() {
     drawTirageCard();
     playSound('click');
     if (currentNumber === 1) {
-      renderTirageReveal().then(() => goTo(8));
+      renderTirageReveal().then(() => { playSound('belline'); goTo(8); });
     } else {
       goTo(7);
-      playTcAnim(currentNumber - 1, async () => { await renderTirageReveal(); goTo(8); });
+      playTcAnim(currentNumber - 1, async () => { await renderTirageReveal(); playSound('belline'); goTo(8); });
     }
   });
 
