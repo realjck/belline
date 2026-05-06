@@ -605,14 +605,13 @@ function setupEventListeners() {
     if (!btn) return;
     currentNumber = parseInt(btn.dataset.num, 10);
     drawTirageCard();
+    playSound('click');
     if (currentNumber === 1) {
-      renderTirageReveal();
-      goTo(8);
+      renderTirageReveal().then(() => goTo(8));
     } else {
       goTo(7);
-      playTcAnim(currentNumber - 1, () => { renderTirageReveal(); goTo(8); });
+      playTcAnim(currentNumber - 1, async () => { await renderTirageReveal(); goTo(8); });
     }
-    playSound('click');
   });
 
   // Screen 8 — Reveal
