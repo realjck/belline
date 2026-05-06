@@ -284,18 +284,23 @@ function goTo(screenIndex) {
     dom.btHome.classList.remove('hidden');
   }
 
-  // Exit screen: remove active, add leaving
+  const isBack = screenIndex < currentScreen;
+
+  // Exit screen
   if (fromScreen !== toScreen) {
     fromScreen.classList.remove('active');
-    fromScreen.classList.add('leaving');
-
-    // After animation, remove leaving class
+    fromScreen.classList.add(isBack ? 'back-leaving' : 'leaving');
     setTimeout(() => {
-      fromScreen.classList.remove('leaving');
+      fromScreen.classList.remove('leaving', 'back-leaving');
     }, 350);
   }
 
-  // Enter screen: add active
+  // Enter screen — slide from left if going back
+  if (isBack) {
+    toScreen.classList.add('back-enter');
+    void toScreen.offsetWidth;
+    toScreen.classList.remove('back-enter');
+  }
   toScreen.classList.add('active');
 
   currentScreen = screenIndex;

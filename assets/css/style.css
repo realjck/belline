@@ -194,6 +194,17 @@ img {
   pointer-events: none;
 }
 
+.screen.back-leaving {
+  opacity: 0;
+  transform: translateX(30px);
+  pointer-events: none;
+}
+
+.screen.back-enter {
+  transform: translateX(-30px) !important;
+  transition: none !important;
+}
+
 /* ═══════════════════════════════════════════════════════════
    HOME SCREEN
    ═══════════════════════════════════════════════════════════ */
