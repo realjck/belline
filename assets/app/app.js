@@ -604,8 +604,20 @@ function setupEventListeners() {
     const btn = e.target.closest('.num-btn');
     if (!btn) return;
     currentNumber = parseInt(btn.dataset.num, 10);
+    drawTirageCard();
+    if (currentNumber === 1) {
+      renderTirageReveal();
+      goTo(8);
+    } else {
+      goTo(7);
+      playTcAnim(currentNumber - 1, () => { renderTirageReveal(); goTo(8); });
+    }
     playSound('click');
   });
+
+  // Screen 8 — Reveal
+  dom.arrRevealBack.addEventListener('click', () => { goTo(4); playSound('back'); });
+  dom.btNouveauTirage.addEventListener('click', () => { goTo(5); playSound('click'); });
 }
 
 // ──── TIRAGE ANIMATION ────
