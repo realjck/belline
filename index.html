@@ -107,6 +107,127 @@
       </div>
     </div>
 
+    <!-- SCREEN 4 — TIRAGE CHOIX -->
+    <div class="screen" id="s-tirage-choix">
+      <div class="tirage-body">
+        <button class="btn-action" id="bt-une-carte"></button>
+        <button class="btn-action btn-disabled" id="bt-tirage-croix"></button>
+      </div>
+      <div class="bottom-nav">
+        <button class="nav-arr" id="arr-tirage-choix-back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <span class="nav-spacer"></span>
+      </div>
+    </div>
+
+    <!-- SCREEN 5 — TIRAGE DOMAINE -->
+    <div class="screen" id="s-tirage-domaine">
+      <div class="tirage-body">
+        <div class="tirage-domaine-title" id="tirage-domaine-title"></div>
+        <button class="btn-action btn-domain" data-domain="amour">
+          <span class="domain-glyph">♡</span>
+          <span class="domain-label" data-key="domain-amour"></span>
+        </button>
+        <button class="btn-action btn-domain" data-domain="travail">
+          <span class="domain-glyph">⌬</span>
+          <span class="domain-label" data-key="domain-travail"></span>
+        </button>
+        <button class="btn-action btn-domain" data-domain="argent">
+          <span class="domain-glyph">❖</span>
+          <span class="domain-label" data-key="domain-argent"></span>
+        </button>
+        <button class="btn-action btn-domain" data-domain="famille">
+          <span class="domain-glyph">ᗑ</span>
+          <span class="domain-label" data-key="domain-famille"></span>
+        </button>
+        <button class="btn-action btn-domain" data-domain="spiritualite">
+          <span class="domain-glyph">☸︎</span>
+          <span class="domain-label" data-key="domain-spiritualite"></span>
+        </button>
+      </div>
+      <div class="bottom-nav">
+        <button class="nav-arr" id="arr-tirage-domaine-back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <span class="nav-spacer"></span>
+      </div>
+    </div>
+
+    <!-- SCREEN 6 — TIRAGE CHIFFRE -->
+    <div class="screen" id="s-tirage-chiffre">
+      <div class="tirage-body tirage-chiffre-body">
+        <div class="tirage-chiffre-title" id="tirage-chiffre-title"></div>
+        <div id="tirage-animation">
+          <div class="tirage-anim">
+            <div class="ta-disc"></div>
+            <div class="ta-ticks" id="ta-ticks"></div>
+            <div class="ta-ring ta-r3"></div>
+            <div class="ta-ring ta-r2"></div>
+            <div class="ta-ring ta-r1"></div>
+            <div class="ta-orbit ta-sun">
+              <div class="ta-body">
+                <div class="ta-sun-icon">
+                  <div class="ta-core"></div>
+                  <div class="ta-ray"></div>
+                  <div class="ta-ray"></div>
+                  <div class="ta-ray"></div>
+                  <div class="ta-ray"></div>
+                </div>
+              </div>
+            </div>
+            <div class="ta-orbit ta-moon">
+              <div class="ta-body">
+                <div class="ta-moon-icon"></div>
+              </div>
+            </div>
+            <div class="ta-orbit ta-star" style="--ta-dur:1.75s; --ta-dir:normal; --ta-r:var(--ta-orbit-1);">
+              <div class="ta-body"><div class="ta-star-icon" style="--ta-s:9px;"></div></div>
+            </div>
+            <div class="ta-orbit ta-star" style="--ta-dur:1.75s; --ta-dir:normal; --ta-r:var(--ta-orbit-1); animation-delay:-0.875s;">
+              <div class="ta-body" style="animation-delay:-0.875s;"><div class="ta-star-icon" style="--ta-s:7px;"></div></div>
+            </div>
+            <div class="ta-orbit ta-star" style="--ta-dur:3.5s; --ta-dir:reverse; --ta-r:var(--ta-orbit-3); animation-delay:-0.5s;">
+              <div class="ta-body" style="animation-delay:-0.5s;"><div class="ta-star-icon" style="--ta-s:8px;"></div></div>
+            </div>
+            <div class="ta-orbit ta-star" style="--ta-dur:3.5s; --ta-dir:reverse; --ta-r:var(--ta-orbit-3); animation-delay:-2s;">
+              <div class="ta-body" style="animation-delay:-2s;"><div class="ta-star-icon" style="--ta-s:6px;"></div></div>
+            </div>
+            <div class="ta-orbit ta-star" style="--ta-dur:3.5s; --ta-dir:reverse; --ta-r:var(--ta-orbit-3); animation-delay:-2.75s;">
+              <div class="ta-body" style="animation-delay:-2.75s;"><div class="ta-star-icon" style="--ta-s:7px;"></div></div>
+            </div>
+            <div class="ta-card-wrap">
+              <div class="ta-card">
+                <div class="ta-card-face ta-front"></div>
+                <div class="ta-card-face ta-back"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tirage-numbers" id="tirage-numbers">
+          <div class="tirage-numbers-row">
+            <button class="nav-arr num-btn" data-num="1">1</button>
+            <button class="nav-arr num-btn" data-num="2">2</button>
+            <button class="nav-arr num-btn" data-num="3">3</button>
+            <button class="nav-arr num-btn" data-num="4">4</button>
+            <button class="nav-arr num-btn" data-num="5">5</button>
+          </div>
+          <div class="tirage-numbers-row">
+            <button class="nav-arr num-btn" data-num="6">6</button>
+            <button class="nav-arr num-btn" data-num="7">7</button>
+            <button class="nav-arr num-btn" data-num="8">8</button>
+            <button class="nav-arr num-btn" data-num="9">9</button>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <button class="nav-arr" id="arr-tirage-chiffre-back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <span class="nav-spacer"></span>
+      </div>
+    </div>
+
   </div><!-- /#screens -->
 
   <!-- ── Modal settings ── -->
