@@ -1032,9 +1032,17 @@ p {
    SCREEN 8 — TIRAGE REVEAL
    ═══════════════════════════════════════════════════════════ */
 
+#s-tirage-reveal {
+  overflow: hidden;
+}
+
 .tirage-reveal-body {
   gap: 16px;
-  justify-content: center;
+  justify-content: flex-start;
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 0;
 }
 
 .reveal-header {
@@ -1042,7 +1050,7 @@ p {
   align-items: center;
   gap: 8px;
   font-family: 'Big Shoulders Display', sans-serif;
-  font-size: 15px;
+  font-size: 30px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1050,9 +1058,17 @@ p {
   overflow: hidden;
 }
 
+.reveal-header .planet-color-square {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  font-size: 22px;
+}
+
 .reveal-card-img {
   flex: 1;
-  max-height: 55vh;
+  min-height: 0;
+  max-width: 100%;
   width: auto;
   object-fit: contain;
   border-radius: min(8vw, 40px);
@@ -1061,10 +1077,10 @@ p {
 
 .reveal-text {
   font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
+  font-size: 18px;
   color: var(--color-text);
-  text-align: center;
-  line-height: 1.5;
+  text-align: left;
+  line-height: 1.4;
 }
 
 /* ═══════════════════════════════════════════════════════════

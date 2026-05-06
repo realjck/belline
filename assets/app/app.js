@@ -705,7 +705,9 @@ async function renderTirageReveal() {
   const square = groupColor
     ? `<span class="planet-color-square" style="background:${groupColor}">${groupSymbol || ''}</span> `
     : '';
-  const label = groupLabel ? `${groupLabel} ` : '';
+  const label = groupLabel
+    ? `<span style="color:${groupColor}">${groupLabel}</span> `
+    : '';
   dom.revealHeader.innerHTML = `${square}${label}${tirageCardId} / ${cardName}`;
 
   dom.revealCardImg.src = ALL_CARDS[tirageCardId].imageUrl;
