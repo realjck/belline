@@ -683,7 +683,28 @@ function setupEventListeners() {
   });
 
   // Screen 8 — Reveal
-  dom.arrRevealBack.addEventListener('click', () => { goTo(6); playSound('back'); });
+  dom.arrRevealBack.addEventListener('click', () => {
+    if (croixFromRecap) {
+      croixFromRecap = false;
+      goTo(9, 'back');
+    } else {
+      goTo(6);
+    }
+    playSound('back');
+  });
+
+  dom.arrRevealNext.addEventListener('click', () => {
+    if (croixPosition < 5) {
+      croixPosition++;
+      updateCroixPositionTitle();
+      goTo(6, 'forward');
+    } else {
+      renderCroixRecap();
+      goTo(9, 'forward');
+    }
+    playSound('click');
+  });
+
   dom.btNouveauTirage.addEventListener('click', () => { goTo(5); playSound('click'); });
 }
 
@@ -812,8 +833,14 @@ async function renderTirageReveal() {
   void dom.revealCardImg.offsetWidth;
   dom.revealCardImg.classList.add('flip-in');
 
-  const DOMAIN_H3_INDEX = { amour: 0, travail: 1, argent: 2, famille: 3, spiritualite: 4 };
-  const h3Index = DOMAIN_H3_INDEX[currentDomain] ?? 0;
+  let h3Index;
+  if (tirageMode === 'croix') {
+    h3Index = 4 + croixPosition;
+  } else {
+    const DOMAIN_H3_INDEX = { amour: 0, travail: 1, argent: 2, famille: 3, spiritualite: 4 };
+    h3Index = DOMAIN_H3_INDEX[currentDomain] ?? 0;
+  }
+
   const cardIdStr = String(tirageCardId).padStart(2, '0');
   try {
     const r = await fetch(`./assets/data/book/${currentLang}/${cardIdStr}.md`);
@@ -832,6 +859,24 @@ async function renderTirageReveal() {
     dom.revealText.textContent = text;
   } catch {
     dom.revealText.textContent = '';
+  }
+
+  updateRevealNavbar();
+}
+
+function updateRevealNavbar() {
+  if (tirageMode === 'une-carte') {
+    dom.arrRevealBack.style.visibility = 'visible';
+    dom.btNouveauTirage.style.visibility = 'visible';
+    dom.arrRevealNext.style.visibility = 'hidden';
+  } else if (croixFromRecap) {
+    dom.arrRevealBack.style.visibility = 'visible';
+    dom.btNouveauTirage.style.visibility = 'hidden';
+    dom.arrRevealNext.style.visibility = 'hidden';
+  } else {
+    dom.arrRevealBack.style.visibility = 'hidden';
+    dom.btNouveauTirage.style.visibility = 'hidden';
+    dom.arrRevealNext.style.visibility = 'visible';
   }
 }
 
