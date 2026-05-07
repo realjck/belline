@@ -520,6 +520,7 @@ function closeInfoModal() {
 function setupEventListeners() {
   // Header buttons
   dom.btHome.addEventListener('click', () => {
+    tirageMode = 'une-carte';
     tcAnimCancelled = true;
     dom.cardsGallery.scrollTop = 0;
     goTo(0);
@@ -611,7 +612,20 @@ function setupEventListeners() {
     playSound('back');
   });
   dom.btUneCarte.addEventListener('click', () => {
+    tirageMode = 'une-carte';
+    updateCroixPositionTitle();
     goTo(5);
+    playSound('click');
+  });
+
+  dom.btTirageCroix.addEventListener('click', () => {
+    tirageMode = 'croix';
+    croixPosition = 1;
+    croixCards = [];
+    croixFromRecap = false;
+    shuffleCroixDeck();
+    updateCroixPositionTitle();
+    goTo(6, 'forward');
     playSound('click');
   });
 
@@ -676,6 +690,32 @@ function drawTirageCard() {
   const buf = new Uint32Array(1);
   crypto.getRandomValues(buf);
   tirageCardId = buf[0] % 53;
+}
+
+function shuffleCroixDeck() {
+  croixDeck = Array.from({ length: 53 }, (_, i) => i);
+  for (let i = 52; i > 0; i--) {
+    const buf = new Uint32Array(1);
+    crypto.getRandomValues(buf);
+    const j = buf[0] % (i + 1);
+    [croixDeck[i], croixDeck[j]] = [croixDeck[j], croixDeck[i]];
+  }
+}
+
+function drawCroixCard(n) {
+  croixDeck.splice(0, n - 1);
+  const cardId = croixDeck.splice(0, 1)[0];
+  croixCards[croixPosition - 1] = cardId;
+  tirageCardId = cardId;
+}
+
+function updateCroixPositionTitle() {
+  if (tirageMode !== 'croix') {
+    dom.croixPositionTitle.classList.add('hidden');
+    return;
+  }
+  dom.croixPositionTitle.textContent = txt(`croix-pos-${croixPosition}`);
+  dom.croixPositionTitle.classList.remove('hidden');
 }
 
 // ──── TIRAGE CARD ANIMATION (tc-*) ────
