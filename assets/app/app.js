@@ -876,7 +876,7 @@ async function renderTirageReveal() {
       while (sib && sib.tagName !== 'P') sib = sib.nextElementSibling;
       if (sib) text = sib.textContent;
     }
-    dom.revealText.textContent = text;
+    dom.revealText.textContent = (tirageMode === 'croix' && !croixFromRecap) ? '' : text;
   } catch {
     dom.revealText.textContent = '';
   }
