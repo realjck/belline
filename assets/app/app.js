@@ -657,13 +657,28 @@ function setupEventListeners() {
     const btn = e.target.closest('.num-btn');
     if (!btn) return;
     currentNumber = parseInt(btn.dataset.num, 10);
-    drawTirageCard();
     playSound('click');
-    if (currentNumber === 1) {
-      renderTirageReveal().then(() => { playSound('belline'); goTo(8); });
+
+    if (tirageMode === 'croix') {
+      drawCroixCard(currentNumber);
+      if (currentNumber === 1) {
+        renderTirageReveal().then(() => { playSound('belline'); goTo(8, 'forward'); });
+      } else {
+        goTo(7, 'forward');
+        playTcAnim(currentNumber - 1, async () => {
+          await renderTirageReveal();
+          playSound('belline');
+          goTo(8, 'forward');
+        });
+      }
     } else {
-      goTo(7);
-      playTcAnim(currentNumber - 1, async () => { await renderTirageReveal(); playSound('belline'); goTo(8); });
+      drawTirageCard();
+      if (currentNumber === 1) {
+        renderTirageReveal().then(() => { playSound('belline'); goTo(8); });
+      } else {
+        goTo(7);
+        playTcAnim(currentNumber - 1, async () => { await renderTirageReveal(); playSound('belline'); goTo(8); });
+      }
     }
   });
 
