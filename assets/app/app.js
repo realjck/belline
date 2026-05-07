@@ -644,7 +644,13 @@ function setupEventListeners() {
 
   // Screen 6 — Chiffres
   dom.arrTirageChiffreBack.addEventListener('click', () => {
-    goTo(5);
+    if (tirageMode === 'croix') {
+      tirageMode = 'une-carte';
+      updateCroixPositionTitle();
+      goTo(4);
+    } else {
+      goTo(5);
+    }
     playSound('back');
   });
   dom.tirageNumbers.addEventListener('click', (e) => {
