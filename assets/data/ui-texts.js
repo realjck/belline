@@ -16,6 +16,13 @@ const UI_TEXTS = {
     'domain-spiritualite': 'Spiritualité',
     'screen-chiffre-title': 'Concentrez-vous sur la question et choisissez un chiffre',
     'btn-nouveau-tirage': 'Nouveau tirage',
+    'croix-pos-1': '1. Situation actuelle',
+    'croix-pos-2': '2. Opposition',
+    'croix-pos-3': '3. Conseil',
+    'croix-pos-4': '4. Résultat',
+    'croix-pos-5': '5. Synthèse',
+    'croix-recap-title': 'Votre tirage en croix',
+    'btn-croix-nouveau-tirage': 'Nouveau tirage',
 
     // Group names (planets)
     'group-4premières': 'Les 4 premières',
@@ -64,6 +71,13 @@ const UI_TEXTS = {
     'domain-spiritualite': 'Spirituality',
     'screen-chiffre-title': 'Focus on the question and choose a number',
     'btn-nouveau-tirage': 'New Reading',
+    'croix-pos-1': '1. Current Situation',
+    'croix-pos-2': '2. Opposition',
+    'croix-pos-3': '3. Advice',
+    'croix-pos-4': '4. Outcome',
+    'croix-pos-5': '5. Synthesis',
+    'croix-recap-title': 'Your Cross Reading',
+    'btn-croix-nouveau-tirage': 'New Reading',
 
     // Group names (planets)
     'group-4premières': 'First Four',
