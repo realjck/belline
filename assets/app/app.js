@@ -230,7 +230,7 @@ function switchLang(lang) {
     renderCardText();
   } else if (currentScreen === 8 && tirageCardId !== null) {
     renderTirageReveal();
-  } else if (currentScreen === 9) {
+  } else if (currentScreen === 9 && croixCards.length === 5) {
     renderCroixRecap();
   }
 
@@ -715,12 +715,14 @@ function setupEventListeners() {
   // Screen 9 — Croix recap
   dom.arrCroixRecapBack.addEventListener('click', () => {
     tirageMode = 'une-carte';
+    croixFromRecap = false;
     goTo(4);
     playSound('back');
   });
 
   dom.btCroixNouveauTirage.addEventListener('click', () => {
     tirageMode = 'une-carte';
+    croixFromRecap = false;
     goTo(4);
     playSound('click');
   });
