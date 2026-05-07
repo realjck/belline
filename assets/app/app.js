@@ -202,6 +202,9 @@ function applyLanguage() {
   // Screen 6 — Chiffre
   dom.tirageChiffreTitle.textContent = txt('screen-chiffre-title');
   dom.btNouveauTirage.textContent = txt('btn-nouveau-tirage');
+  dom.btCroixNouveauTirage.textContent = txt('btn-croix-nouveau-tirage');
+
+  updateCroixPositionTitle();
 }
 
 function applyTheme() {
@@ -227,6 +230,8 @@ function switchLang(lang) {
     renderCardText();
   } else if (currentScreen === 8 && tirageCardId !== null) {
     renderTirageReveal();
+  } else if (currentScreen === 9) {
+    renderCroixRecap();
   }
 
   playSound('click');
@@ -706,6 +711,19 @@ function setupEventListeners() {
   });
 
   dom.btNouveauTirage.addEventListener('click', () => { goTo(5); playSound('click'); });
+
+  // Screen 9 — Croix recap
+  dom.arrCroixRecapBack.addEventListener('click', () => {
+    tirageMode = 'une-carte';
+    goTo(4);
+    playSound('back');
+  });
+
+  dom.btCroixNouveauTirage.addEventListener('click', () => {
+    tirageMode = 'une-carte';
+    goTo(4);
+    playSound('click');
+  });
 }
 
 // ──── TIRAGE ANIMATION ────
@@ -877,6 +895,42 @@ function updateRevealNavbar() {
     dom.arrRevealBack.style.visibility = 'hidden';
     dom.btNouveauTirage.style.visibility = 'hidden';
     dom.arrRevealNext.style.visibility = 'visible';
+  }
+}
+
+function renderCroixRecap() {
+  dom.croixRecapTitle.textContent = txt('croix-recap-title');
+  dom.croixGrid.innerHTML = '';
+
+  for (let pos = 1; pos <= 5; pos++) {
+    const cardId = croixCards[pos - 1];
+    const cell = document.createElement('div');
+    cell.className = 'croix-cell';
+    cell.dataset.pos = String(pos);
+
+    const img = document.createElement('img');
+    img.src = ALL_CARDS[cardId].imageUrl;
+    img.alt = getCardName(cardId, currentLang);
+    img.className = 'croix-cell-img';
+
+    const label = document.createElement('div');
+    label.className = 'croix-cell-label';
+    label.textContent = getCardName(cardId, currentLang);
+
+    cell.appendChild(img);
+    cell.appendChild(label);
+
+    cell.addEventListener('click', () => {
+      tirageCardId = cardId;
+      croixPosition = pos;
+      croixFromRecap = true;
+      renderTirageReveal().then(() => {
+        playSound('belline');
+        goTo(8, 'forward');
+      });
+    });
+
+    dom.croixGrid.appendChild(cell);
   }
 }
 
