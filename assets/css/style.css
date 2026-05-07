@@ -1098,6 +1098,108 @@ p {
   line-height: 1.4;
 }
 
+/* 3-column grid nav for reveal screen — keeps layout stable across modes */
+.reveal-bottom-nav {
+  display: grid;
+  grid-template-columns: 42px 1fr 42px;
+  align-items: center;
+}
+.reveal-bottom-nav .btn-action {
+  justify-self: center;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 6 — POSITION TITLE (cross mode)
+   ═══════════════════════════════════════════════════════════ */
+
+.position-title {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(22px, 5.5vw, 32px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  text-align: center;
+  padding: 0 16px 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCREEN 9 — TIRAGE CROIX RECAP
+   ═══════════════════════════════════════════════════════════ */
+
+.croix-recap-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 16px 0;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.croix-recap-title {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(18px, 4.5vw, 24px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  text-align: center;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.croix-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.croix-cell {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Cross positions: left, right, top, bottom, center */
+.croix-cell[data-pos="1"] { grid-area: 2 / 1; }
+.croix-cell[data-pos="2"] { grid-area: 2 / 3; }
+.croix-cell[data-pos="3"] { grid-area: 1 / 2; }
+.croix-cell[data-pos="4"] { grid-area: 3 / 2; }
+.croix-cell[data-pos="5"] { grid-area: 2 / 2; }
+
+.croix-cell-img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: min(2vw, 10px);
+  border: 1.5px solid var(--color-border);
+  display: block;
+  transition: border-color .2s;
+}
+.croix-cell:active .croix-cell-img {
+  border-color: var(--color-accent);
+}
+
+.croix-cell-label {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-muted);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
 /* ═══════════════════════════════════════════════════════════
    TIRAGE ANIMATION (ta-* prefix, scoped to avoid conflicts)
    ═══════════════════════════════════════════════════════════ */
