@@ -688,7 +688,7 @@ function setupEventListeners() {
       croixFromRecap = false;
       goTo(9, 'back');
     } else {
-      goTo(6);
+      goTo(6, 'back');
     }
     playSound('back');
   });
