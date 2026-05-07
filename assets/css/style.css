@@ -1067,13 +1067,19 @@ p {
   font-size: 22px;
 }
 
-.reveal-card-img {
+.reveal-card-wrapper {
   flex: 1;
   min-height: 0;
-  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reveal-card-img {
+  max-height: 100%;
   width: auto;
-  object-fit: contain;
-  border-radius: min(8vw, 40px);
+  max-width: 100%;
+  border-radius: min(4vw, 40px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
 }
 
@@ -1088,6 +1094,17 @@ p {
 
 @media (prefers-reduced-motion: reduce) {
   .reveal-card-img.flip-in { animation-duration: 0.01s; }
+}
+
+.reveal-croix-position {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(18px, 4.5vw, 25px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  text-align: center;
+  padding-bottom: 4px;
 }
 
 .reveal-text {

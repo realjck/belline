@@ -106,6 +106,7 @@ function cacheDOM() {
   dom.revealText = document.getElementById('reveal-text');
   dom.arrRevealBack = document.getElementById('arr-reveal-back');
   dom.btNouveauTirage = document.getElementById('bt-nouveau-tirage');
+  dom.revealCroixPosition = document.getElementById('reveal-croix-position');
   dom.arrRevealNext = document.getElementById('arr-reveal-next');
   dom.croixPositionTitle = document.getElementById('croix-position-title');
   dom.croixGrid = document.getElementById('croix-grid');
@@ -890,6 +891,13 @@ async function renderTirageReveal() {
     dom.revealText.textContent = (tirageMode === 'croix' && !croixFromRecap) ? '' : text;
   } catch {
     dom.revealText.textContent = '';
+  }
+
+  if (tirageMode === 'croix') {
+    dom.revealCroixPosition.textContent = txt(`reveal-croix-pos-${croixPosition}`);
+    dom.revealCroixPosition.classList.remove('hidden');
+  } else {
+    dom.revealCroixPosition.classList.add('hidden');
   }
 
   updateRevealNavbar();
