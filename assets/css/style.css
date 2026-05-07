@@ -1127,14 +1127,19 @@ p {
    SCREEN 9 — TIRAGE CROIX RECAP
    ═══════════════════════════════════════════════════════════ */
 
+#s-tirage-croix-recap {
+  overflow: hidden;
+}
+
 .croix-recap-body {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 16px 0;
-  overflow-y: auto;
+  padding: 16px;
+  overflow: hidden;
   min-height: 0;
+  gap: 12px;
 }
 
 .croix-recap-title {
@@ -1145,16 +1150,19 @@ p {
   letter-spacing: 0.05em;
   color: var(--color-accent);
   text-align: center;
-  margin-bottom: 12px;
   flex-shrink: 0;
 }
 
 .croix-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
   gap: 8px;
   width: 100%;
-  max-width: 380px;
+  max-width: 240px;
+  max-height: calc(100dvh - 210px);
+  aspect-ratio: 2 / 3;
+  margin: auto;
 }
 
 .croix-cell {
@@ -1175,29 +1183,19 @@ p {
 
 .croix-cell-img {
   width: 100%;
-  aspect-ratio: 2 / 3;
+  height: 100%;
   object-fit: cover;
   border-radius: min(2vw, 10px);
-  border: 1.5px solid var(--color-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   display: block;
-  transition: border-color .2s;
+  transition: box-shadow .2s;
 }
 .croix-cell:active .croix-cell-img {
-  border-color: var(--color-accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), 0 0 0 2px var(--color-accent);
 }
 
 .croix-cell-label {
-  font-family: 'Big Shoulders Display', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--color-muted);
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
+  display: none;
 }
 
 /* ═══════════════════════════════════════════════════════════
