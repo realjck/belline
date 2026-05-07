@@ -7,6 +7,7 @@ Application web compagnon pour l'Oracle de Belline. Vanilla JS SPA, mobile-first
 - **HTML/CSS/JS** vanille, pas de build step
 - **marked.js** (`assets/libs/marked/marked.min.js`) pour le rendu Markdown des textes de cartes
 - **Google Fonts** : Big Shoulders Display (100–900) + DM Sans variable (100–900) — chargées via `<link>` dans `index.html`
+- **Segoe UI Symbol** : police locale (`assets/fonts/segoe-ui-symbol/Segoe-UI-Symbol.ttf`) chargée via `@font-face` — utilisée pour les glyphes planétaires Unicode dans les carrés colorés
 - **localStorage** : `Belline_lang`, `Belline_theme`, `Belline_sound`
 - Pas d'`export`/`import` — tous les scripts sont chargés en `<script>` dans `index.html`
 
@@ -24,8 +25,8 @@ assets/
     book/fr/XX.md                 Textes des cartes en français (00.md à 52.md)
     book/en/XX.md                 Textes des cartes en anglais
   images/cartes/XX.jpg            Illustrations (00.jpg à 52.jpg)
-  fonts/                          Polices locales (non utilisées, conservées)
-  sounds/click.mp3, back.mp3
+  fonts/segoe-ui-symbol/          Segoe UI Symbol (TTF) — glyphes planétaires
+  sounds/click.mp3, back.mp3, belline.mp3
   libs/marked/marked.min.js
 ```
 
@@ -33,7 +34,7 @@ assets/
 
 ## Architecture écrans
 
-4 écrans (SPA, transitions CSS `opacity + translateX .35s ease`) :
+10 écrans (SPA, transitions CSS `opacity + translateX .35s ease`) :
 
 | Index | ID | Description |
 |-------|----|-------------|
@@ -41,19 +42,57 @@ assets/
 | 1 | `#s-cards` | Galerie des 53 cartes (responsive grid, groupée) |
 | 2 | `#s-card-large` | Vue détaillée d'une carte |
 | 3 | `#s-card-text` | Texte complet de la carte (Markdown) |
+| 4 | `#s-tirage-choix` | Choix du type de tirage |
+| 5 | `#s-tirage-domaine` | Choix du domaine de question |
+| 6 | `#s-tirage-chiffre` | Sélection du chiffre (1–9) |
+| 7 | `#s-tirage-anim` | Animation de la pile de cartes |
+| 8 | `#s-tirage-reveal` | Révélation de la carte tirée |
+| 9 | `#s-tirage-croix-recap` | Récapitulatif du tirage en croix (5 cartes) |
 
-Navigation gérée par `goTo(screenIndex)` dans `app.js`. L'écran entrant reçoit `.active`, le sortant `.leaving` (retiré après 350ms).
+Navigation gérée par `goTo(screenIndex, forceDirection)` dans `app.js`. L'écran entrant reçoit `.active`, le sortant `.leaving` (retiré après 350ms). Les transitions sont **directionnelles** : avancer → slide depuis la droite, reculer (`screenIndex < currentScreen`) → slide depuis la gauche (classes `.back-enter` / `.back-leaving`). `forceDirection = 'forward' | 'back'` permet de forcer la direction (ex. 8→6 en mode croix doit animer vers l'avant).
 
 ## Navigation des écrans
 
-- **Screen 2 (vue carte)** : flèche gauche → liste (screen 1), flèche droite → texte (screen 3), clic image → texte
-- **Screen 3 (texte)** : flèche gauche → vue carte (screen 2), bouton central → liste (screen 1)
-- **Bouton home (navbar)** : retour à l'accueil (screen 0) + scroll top de la liste des cartes
-- La position de scroll de la liste est préservée lors des navigations (reset uniquement via home)
+- **Screen 2 (vue carte)** : flèche gauche → liste (1), flèche droite → texte (3), clic image → texte (3)
+- **Screen 3 (texte)** : flèche gauche → vue carte (2), tap n'importe où → vue carte (2). Pas de bouton central.
+- **Screen 6 (chiffre)** : clic bouton 1–9 → tirage + `goTo(7)` si n ≥ 2, `goTo(8)` directement si n = 1
+- **Screen 7 (anim)** : auto → `goTo(8)` à la fin de l'animation
+- **Screen 8 (reveal) — mode une-carte** : flèche gauche → chiffre (6), bouton "Nouveau tirage" → domaine (5), clic carte → identique flèche gauche
+- **Screen 8 (reveal) — mode croix** : flèche droite uniquement → position suivante (6) ou récap (9) ; clic carte = flèche droite. Depuis récap : flèche gauche → récap (9), clic carte = flèche gauche.
+- **Screen 9 (récap croix)** : flèche gauche → choix tirage (4), "Nouveau tirage" → choix tirage (4), clic carte → détail (8)
+- **Bouton home (navbar)** : retour à l'accueil (0) + scroll top de la liste des cartes
+
+## Flux tirage une-carte (screens 4 → 8)
+
+```
+Home → [Consulter l'oracle] → Choix tirage (4)
+→ Domaine (5) → Chiffre (6)
+→ si n = 1 : renderTirageReveal() → goTo(8)
+→ si n ≥ 2 : goTo(7) → playTcAnim(n-1, cb) → renderTirageReveal() → goTo(8)
+```
+
+- `drawTirageCard()` : tirage cryptographique via `crypto.getRandomValues`, stocké dans `tirageCardId`
+- `playSound('belline')` joué à l'arrivée sur l'écran 8
+
+## Flux tirage en croix (screens 4 → 6/7/8 × 5 → 9)
+
+```
+Choix tirage (4) → [Tirage en croix] → Chiffre (6) [position 1]
+→ goTo(7/8) → [flèche droite] → Chiffre (6) [position 2] → ...
+→ après position 5 : renderCroixRecap() → goTo(9)
+→ clic carte sur récap → goTo(8) [détail avec texte]
+→ flèche gauche → goTo(9) [retour récap]
+```
+
+- `shuffleCroixDeck()` : Fisher-Yates avec `crypto.getRandomValues`, 53 cartes → `croixDeck`
+- `drawCroixCard(n)` : `splice(0, n-1)` pour écarter, `splice(0, 1)[0]` pour tirer — garantit l'absence de doublons
+- Texte affiché : h3 à l'index `4 + croixPosition` (indices 5–9 du fichier .md)
+- Pendant le tirage séquentiel (positions 1–5) : **texte masqué** sur screen 8, visible uniquement depuis le récap (`croixFromRecap = true`)
+- `playSound('belline')` joué pendant le tirage séquentiel, `playSound('click')` depuis le récap
 
 ## Conventions CSS importantes
 
-- `#main` : max-width 720px, centré, height 100vh (pas de `overflow:hidden` — géré par `#app`)
+- `#main` : max-width 720px, centré, height 100vh/100dvh (pas de `overflow:hidden` — géré par `#app`)
 - `body` : background `var(--color-bg)` (s'adapte light/dark)
 - Variables principales : `--color-bg`, `--color-bg2`, `--color-accent` (`#7a5c3a` light / `#c8963c` dark), `--color-text`, `--color-border`, `--color-muted`
 - `.dark` sur `<html>` pour le mode sombre
@@ -61,9 +100,20 @@ Navigation gérée par `goTo(screenIndex)` dans `app.js`. L'écran entrant reço
 - Boutons `.btn-action` : DM Sans, width auto (fit-content), border-radius 9999px, border 1.5px, accent au tap
 - Flèches `.nav-arr` : circulaires (border-radius 50%, 42×42px), couleur accent
 - `.bottom-nav` : `justify-content: space-between` — flèches aux bords, bouton centré. Utiliser `.nav-spacer` (42×42px invisible) pour équilibrer quand une flèche manque
-- Arrondis cartes : `min(2vw, 16px)` galerie, `min(8vw, 40px)` vue large
+- Arrondis cartes : `min(2vw, 16px)` galerie, `min(4vw, 40px)` vue reveal (screen 8), `min(8vw, 40px)` vue large (screen 2)
 - Navbar (`hdr`) : fond étendu full-width via `box-shadow: 0 0 0 100vmax` + `clip-path: inset(0 -100vmax)`
 - Modales : `backdrop-filter: blur(6px)`, animation slide+fade sur `.modal-sheet` via `.active`/`.closing`
+- Screen 8 : `overflow: hidden` — navbar à 3 colonnes CSS Grid (`reveal-bottom-nav`) pour stabiliser le layout quand boutons visibles/invisibles via `style.visibility` + `disabled`
+- Screen 9 : `overflow: hidden` — grille centrée avec `max-width`, `max-height: calc(100dvh - 210px)`, `aspect-ratio: 2/3`
+
+## Présentation planète (pattern unifié sur screens 2, 3, 8)
+
+Format header : `[planet-color-square] [NOM PLANÈTE en couleur] N / Nom de la carte`
+
+- `.planet-color-square` : carré coloré (background = couleur planète) avec glyphe Segoe UI Symbol
+- Taille par contexte : 18×18px défaut, 30×30px dans `.card-large-header`, 36×36px dans `.reveal-header`, 42×42px dans `#card-text-content h1`
+- Cartes 0–3 (sans planète) : pas de carré, pas de nom coloré — affichage `N / Nom` seul
+- Injecté via JS (`innerHTML` ou `insertBefore`) après rendu Markdown
 
 ## Galerie des cartes (screen 1)
 
@@ -71,22 +121,73 @@ Navigation gérée par `goTo(screenIndex)` dans `app.js`. L'écran entrant reço
 - Chaque `.card-item` : flex-column, `min-width: 0` (requis pour le tronquage du label)
   - `.card-item-label` : `N / Nom`, Big Shoulders Display 14px uppercase, `text-overflow: ellipsis`
   - `.card-item-img` : wrapper avec border-radius + overflow hidden
-- En-têtes de groupe `.cards-group-header` : carré coloré `.group-color-square` + nom du groupe, 22px, border-bottom 4px
+- En-têtes de groupe `.cards-group-header` : `.group-color-square` (24×24px, Segoe UI Symbol) + nom du groupe en couleur normale, 22px, border-bottom coloré
 
-## Vue détaillée (screen 2)
+## Animation tirage (screen 7) — préfixe CSS `tc-*`
 
-- `.card-large-header` : titre `N / Nom` au-dessus de la carte (Big Shoulders Display 26px uppercase)
-- `.card-large-planet` : badge planète en dessous (`.planet-color-square` + nom du groupe, 13px centré)
-- Plus de navigation prev/next entre les cartes
+- `#s-tirage-anim` : plein écran, pas de navbar, `--tc-fg: var(--color-accent)`
+- `buildTcDeck(deckEl, n)` : crée n+1 cartes `.tc-card` avec jitter déterministe (`tcJitter`)
+- `playTcAnim(n, onComplete)` : fade séquentiel des cartes (300ms initial, 330ms/carte, transition 0.52s), pause 300ms finale, pas de flip
+- `tcSleep` : `ms => new Promise(r => setTimeout(r, ms))`
+
+## Révélation (screen 8) — préfixe CSS `reveal-*`
+
+- `.reveal-card-wrapper` : `flex: 1; min-height: 0` — prend l'espace restant, contient l'image
+- `.reveal-card-img` : `max-height: 100%; width: auto; max-width: 100%` — s'adapte sans crop ni bandes blanches. Cursor `pointer` en mode croix (géré via JS dans `updateRevealNavbar`)
+- `.reveal-croix-position` : titre de position (ex. "Situation actuelle") affiché en mode croix uniquement, au-dessus du texte
+- Animation d'entrée : `@keyframes reveal-flip-in` (scaleX 0→1, 0.45s ease-out) via classe `.flip-in`, re-déclenchée à chaque tirage
+- Texte : premier `<p>` après le `<h3>` correspondant — domaine (indices 0–4) en mode une-carte, position croix (indices 5–9) en mode croix
+- `updateRevealNavbar()` : gère `style.visibility` + `disabled` sur les 3 boutons selon le mode (une-carte / croix-actif / croix-depuis-récap)
+- Fichiers book fetchés : `./assets/data/book/${currentLang}/${cardId}.md`
+
+## Récap tirage en croix (screen 9)
+
+- `renderCroixRecap()` : construit la grille 5 cartes, titre + sous-titre localisés
+- Layout CSS Grid 3×3 avec positions fixes via `data-pos` + `grid-area` :
+  - pos 1 (Situation) → 2/1, pos 2 (Opposition) → 2/3, pos 3 (Conseil) → 1/2, pos 4 (Résultat) → 3/2, pos 5 (Synthèse) → 2/2
+- Cartes : ombre portée `box-shadow`, pas de border, `border-radius: min(2vw, 10px)`
+- Clic carte → `croixFromRecap = true`, `renderTirageReveal()`, `goTo(8, 'forward')`
+- `switchLang()` re-rend le récap si `currentScreen === 9 && croixCards.length === 5`
+
+## État global (`app.js`)
+
+- `currentScreen` : index écran actif
+- `currentCardId` : carte sélectionnée dans la galerie (screens 1–3)
+- `tirageCardId` : carte tirée pour le tirage (screens 7–8), séparé de `currentCardId`
+- `currentDomain` : domaine choisi (screen 5)
+- `currentNumber` : chiffre choisi (screen 6)
+- `currentLang` : `'fr'` | `'en'`
+- `soundEnabled`, `darkMode`
+- `tirageMode` : `'une-carte'` | `'croix'`
+- `croixPosition` : position courante 1–5
+- `croixCards` : tableau des 5 IDs de cartes tirées
+- `croixDeck` : deck restant après shuffle (évite les doublons)
+- `croixFromRecap` : `true` quand on navigue vers screen 8 depuis le récap
 
 ## Données cartes
 
 Dans `belline-cards.js` :
 - `GROUPS` : `{ null: [0,1,2,3], Soleil: [...], Lune: [...], ... }` — 8 groupes
 - `GROUP_COLORS` : couleur hex par groupe planétaire
+- `GROUP_SYMBOLS` : glyphe Unicode par planète (☉ ☾ ☿ ♀︎ ♂︎ ♃ ♄) — ♀ et ♂ suivis de U+FE0E pour forcer le rendu texte (pas emoji)
+- `getGroupSymbol(groupName)` : retourne le glyphe Unicode du groupe
+- `getGroupNameForCardId(cardId)` : retourne le nom du groupe planétaire (null pour cartes 0–3)
 - `CARD_NAMES` : `{ fr: [...53 noms...], en: [...53 noms...] }` — noms localisés
 - `getCardName(cardId, lang)` : retourne le nom localisé avec fallback `fr`
 - `ALL_CARDS` : array de 53 objets `{ id, imageUrl }` — images dans `assets/images/cartes/XX.jpg`
+
+## Structure Markdown des cartes (fichiers book)
+
+Chaque fichier `.md` contient 10 sections `###` (index 0–9) :
+
+| Index | Section |
+|-------|---------|
+| 0–4 | Domaines une-carte : Amour, Travail, Financier, Famille, Spiritualité |
+| 5 | En position 1 — Situation actuelle |
+| 6 | En position 2 — Oppositions |
+| 7 | En position 3 — Conseil |
+| 8 | En position 4 — Résultat |
+| 9 | En position 5 — Synthèse |
 
 ## Localisation
 
@@ -94,8 +195,6 @@ Dans `belline-cards.js` :
 Titres home localisés via `dom.homeTitle.innerHTML = txt('home-title')` (contient `<br>`).
 Noms de cartes via `getCardName(cardId, currentLang)` dans `belline-cards.js`.
 
-## Ce qui est prévu pour plus tard (Phase 2)
+## Sons
 
-- Bouton "Consulter l'oracle" sur la home (désactivé en Phase 1)
-- Tirage de cartes avec interprétation
-- Traductions supplémentaires (3-4 langues) : ajouter des clés dans `UI_TEXTS` et `CARD_NAMES`
+`playSound(type)` avec map : `click` → `click.mp3`, `back` → `back.mp3`, `belline` → `belline.mp3`. Silencieux si `soundEnabled = false`.
