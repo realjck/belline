@@ -110,6 +110,7 @@ function cacheDOM() {
   dom.croixPositionTitle = document.getElementById('croix-position-title');
   dom.croixGrid = document.getElementById('croix-grid');
   dom.croixRecapTitle = document.getElementById('croix-recap-title');
+  dom.croixRecapSubtitle = document.getElementById('croix-recap-subtitle');
   dom.arrCroixRecapBack = document.getElementById('arr-croix-recap-back');
   dom.btCroixNouveauTirage = document.getElementById('bt-croix-nouveau-tirage');
 }
@@ -203,6 +204,7 @@ function applyLanguage() {
   dom.tirageChiffreTitle.textContent = txt('screen-chiffre-title');
   dom.btNouveauTirage.textContent = txt('btn-nouveau-tirage');
   dom.btCroixNouveauTirage.textContent = txt('btn-croix-nouveau-tirage');
+  dom.croixRecapSubtitle.textContent = txt('croix-recap-subtitle');
 
   updateCroixPositionTitle();
 }
@@ -713,6 +715,7 @@ function setupEventListeners() {
   dom.btNouveauTirage.addEventListener('click', () => { goTo(5); playSound('click'); });
 
   dom.revealCardImg.addEventListener('click', () => {
+    if (tirageMode !== 'croix') return;
     if (!dom.arrRevealNext.disabled) {
       dom.arrRevealNext.click();
     } else if (!dom.arrRevealBack.disabled) {
@@ -915,6 +918,7 @@ function updateRevealNavbar() {
     dom.arrRevealNext.style.visibility = 'visible';
     dom.arrRevealNext.disabled = false;
   }
+  dom.revealCardImg.style.cursor = tirageMode === 'croix' ? 'pointer' : 'default';
 }
 
 function renderCroixRecap() {
@@ -944,7 +948,7 @@ function renderCroixRecap() {
       croixPosition = pos;
       croixFromRecap = true;
       renderTirageReveal().then(() => {
-        playSound('belline');
+        playSound('click');
         goTo(8, 'forward');
       });
     });

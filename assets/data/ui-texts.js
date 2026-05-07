@@ -22,6 +22,7 @@ const UI_TEXTS = {
     'croix-pos-4': '4. Résultat',
     'croix-pos-5': '5. Synthèse',
     'croix-recap-title': 'Votre tirage en croix',
+    'croix-recap-subtitle': 'Cliquez sur les cartes pour en savoir plus.',
     'btn-croix-nouveau-tirage': 'Nouveau tirage',
 
     // Group names (planets)
@@ -77,6 +78,7 @@ const UI_TEXTS = {
     'croix-pos-4': '4. Outcome',
     'croix-pos-5': '5. Synthesis',
     'croix-recap-title': 'Your Cross Reading',
+    'croix-recap-subtitle': 'Tap the cards to learn more.',
     'btn-croix-nouveau-tirage': 'New Reading',
 
     // Group names (planets)

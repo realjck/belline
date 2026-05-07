@@ -1153,6 +1153,14 @@ p {
   flex-shrink: 0;
 }
 
+.croix-recap-subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(12px, 3vw, 14px);
+  color: var(--color-muted);
+  text-align: center;
+  flex-shrink: 0;
+}
+
 .croix-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
