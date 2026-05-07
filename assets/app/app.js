@@ -887,16 +887,25 @@ async function renderTirageReveal() {
 function updateRevealNavbar() {
   if (tirageMode === 'une-carte') {
     dom.arrRevealBack.style.visibility = 'visible';
+    dom.arrRevealBack.disabled = false;
     dom.btNouveauTirage.style.visibility = 'visible';
+    dom.btNouveauTirage.disabled = false;
     dom.arrRevealNext.style.visibility = 'hidden';
+    dom.arrRevealNext.disabled = true;
   } else if (croixFromRecap) {
     dom.arrRevealBack.style.visibility = 'visible';
+    dom.arrRevealBack.disabled = false;
     dom.btNouveauTirage.style.visibility = 'hidden';
+    dom.btNouveauTirage.disabled = true;
     dom.arrRevealNext.style.visibility = 'hidden';
+    dom.arrRevealNext.disabled = true;
   } else {
     dom.arrRevealBack.style.visibility = 'hidden';
+    dom.arrRevealBack.disabled = true;
     dom.btNouveauTirage.style.visibility = 'hidden';
+    dom.btNouveauTirage.disabled = true;
     dom.arrRevealNext.style.visibility = 'visible';
+    dom.arrRevealNext.disabled = false;
   }
 }
 
