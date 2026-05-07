@@ -14,6 +14,11 @@ let currentDomain = null;
 let currentNumber = null;
 let tirageCardId = null;
 let tcAnimCancelled = false;
+let tirageMode = 'une-carte';  // 'une-carte' | 'croix'
+let croixPosition = 1;          // 1–5
+let croixCards = [];            // drawn card ID per position
+let croixDeck = [];             // remaining shuffled deck
+let croixFromRecap = false;     // true when viewing detail from recap screen
 const H3_SYMBOLS = ['♡', '⌬', '❖', 'ᗑ', '☸︎'];
 
 const screenMap = {
@@ -25,7 +30,8 @@ const screenMap = {
   5: 's-tirage-domaine',
   6: 's-tirage-chiffre',
   7: 's-tirage-anim',
-  8: 's-tirage-reveal'
+  8: 's-tirage-reveal',
+  9: 's-tirage-croix-recap'
 };
 
 // ──── DOM ELEMENT CACHE ────
@@ -100,6 +106,12 @@ function cacheDOM() {
   dom.revealText = document.getElementById('reveal-text');
   dom.arrRevealBack = document.getElementById('arr-reveal-back');
   dom.btNouveauTirage = document.getElementById('bt-nouveau-tirage');
+  dom.arrRevealNext = document.getElementById('arr-reveal-next');
+  dom.croixPositionTitle = document.getElementById('croix-position-title');
+  dom.croixGrid = document.getElementById('croix-grid');
+  dom.croixRecapTitle = document.getElementById('croix-recap-title');
+  dom.arrCroixRecapBack = document.getElementById('arr-croix-recap-back');
+  dom.btCroixNouveauTirage = document.getElementById('bt-croix-nouveau-tirage');
 }
 
 // ──── INITIALIZATION ────
@@ -271,7 +283,7 @@ function playSound(type) {
 
 // ──── NAVIGATION ────
 
-function goTo(screenIndex) {
+function goTo(screenIndex, forceDirection = null) {
   const fromScreenId = screenMap[currentScreen];
   const toScreenId = screenMap[screenIndex];
 
@@ -287,7 +299,8 @@ function goTo(screenIndex) {
     dom.btHome.classList.remove('hidden');
   }
 
-  const isBack = screenIndex < currentScreen;
+  const isBack = forceDirection === 'back'
+    || (forceDirection !== 'forward' && screenIndex < currentScreen);
 
   // Exit screen
   if (fromScreen !== toScreen) {
