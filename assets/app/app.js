@@ -712,6 +712,14 @@ function setupEventListeners() {
 
   dom.btNouveauTirage.addEventListener('click', () => { goTo(5); playSound('click'); });
 
+  dom.revealCardImg.addEventListener('click', () => {
+    if (!dom.arrRevealNext.disabled) {
+      dom.arrRevealNext.click();
+    } else if (!dom.arrRevealBack.disabled) {
+      dom.arrRevealBack.click();
+    }
+  });
+
   // Screen 9 — Croix recap
   dom.arrCroixRecapBack.addEventListener('click', () => {
     tirageMode = 'une-carte';
