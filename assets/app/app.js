@@ -116,7 +116,6 @@ function cacheDOM() {
   dom.croixGrid = document.getElementById('croix-grid');
   dom.croixRecapTitle = document.getElementById('croix-recap-title');
   dom.croixRecapSubtitle = document.getElementById('croix-recap-subtitle');
-  dom.arrCroixRecapBack = document.getElementById('arr-croix-recap-back');
   dom.btCroixNouveauTirage = document.getElementById('bt-croix-nouveau-tirage');
   dom.croixAnimGrid = document.getElementById('croix-anim-grid');
 }
@@ -736,13 +735,6 @@ function setupEventListeners() {
   dom.modalRevealText.addEventListener('click', closeRevealTextModal);
 
   // Screen 9 — Croix recap
-  dom.arrCroixRecapBack.addEventListener('click', () => {
-    tirageMode = 'une-carte';
-    croixFromRecap = false;
-    goTo(4);
-    playSound('back');
-  });
-
   dom.btCroixNouveauTirage.addEventListener('click', () => {
     tirageMode = 'une-carte';
     croixFromRecap = false;
@@ -916,8 +908,8 @@ async function renderTirageReveal() {
 
 function updateRevealNavbar() {
   if (tirageMode === 'une-carte') {
-    dom.arrRevealBack.style.visibility = 'visible';
-    dom.arrRevealBack.disabled = false;
+    dom.arrRevealBack.style.visibility = 'hidden';
+    dom.arrRevealBack.disabled = true;
     dom.btNouveauTirage.style.visibility = 'visible';
     dom.btNouveauTirage.disabled = false;
     dom.arrRevealNext.style.visibility = 'hidden';
