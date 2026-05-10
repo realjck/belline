@@ -34,7 +34,7 @@ assets/
 
 ## Architecture écrans
 
-10 écrans (SPA, transitions CSS `opacity + translateX .35s ease`) :
+11 écrans (SPA, transitions CSS `opacity + translateX .35s ease`) :
 
 | Index | ID | Description |
 |-------|----|-------------|
@@ -48,6 +48,7 @@ assets/
 | 7 | `#s-tirage-anim` | Animation de la pile de cartes |
 | 8 | `#s-tirage-reveal` | Révélation de la carte tirée |
 | 9 | `#s-tirage-croix-recap` | Récapitulatif du tirage en croix (5 cartes) |
+| 10 | `#s-tirage-croix-anim` | Animation croix — carte courante avec spring (pas de navbar) |
 
 Navigation gérée par `goTo(screenIndex, forceDirection)` dans `app.js`. L'écran entrant reçoit `.active`, le sortant `.leaving` (retiré après 350ms). Les transitions sont **directionnelles** : avancer → slide depuis la droite, reculer (`screenIndex < currentScreen`) → slide depuis la gauche (classes `.back-enter` / `.back-leaving`). `forceDirection = 'forward' | 'back'` permet de forcer la direction (ex. 8→6 en mode croix doit animer vers l'avant).
 
@@ -55,12 +56,14 @@ Navigation gérée par `goTo(screenIndex, forceDirection)` dans `app.js`. L'écr
 
 - **Screen 2 (vue carte)** : flèche gauche → liste (1), flèche droite → texte (3), clic image → texte (3)
 - **Screen 3 (texte)** : flèche gauche → vue carte (2), tap n'importe où → vue carte (2). Pas de bouton central.
-- **Screen 6 (chiffre)** : clic bouton 1–9 → tirage + `goTo(7)` si n ≥ 2, `goTo(8)` directement si n = 1
-- **Screen 7 (anim)** : auto → `goTo(8)` à la fin de l'animation
-- **Screen 8 (reveal) — mode une-carte** : flèche gauche → chiffre (6), bouton "Nouveau tirage" → domaine (5), clic carte → identique flèche gauche
-- **Screen 8 (reveal) — mode croix** : flèche droite uniquement → position suivante (6) ou récap (9) ; clic carte = flèche droite. Depuis récap : flèche gauche → récap (9), clic carte = flèche gauche.
-- **Screen 9 (récap croix)** : flèche gauche → choix tirage (4), "Nouveau tirage" → choix tirage (4), clic carte → détail (8)
-- **Bouton home (navbar)** : retour à l'accueil (0) + scroll top de la liste des cartes
+- **Screen 6 (chiffre)** : clic bouton 1–9 → tirage + `goTo(7)` si n ≥ 2, `goTo(10)` directement si n = 1 (mode croix) ou `goTo(8)` (mode une-carte)
+- **Screen 7 (anim)** : auto → `goTo(10)` (mode croix) ou `goTo(8)` (mode une-carte) à la fin de l'animation
+- **Screen 8 (reveal) — mode une-carte** : pas de flèche gauche, "Nouveau tirage" → domaine (5), clic carte → ouvre modale texte (`#modal-reveal-text`)
+- **Screen 8 (reveal) — mode croix séquentiel** : flèche droite uniquement → position suivante (6) ou récap (9) ; clic carte = flèche droite. Texte non affiché (pas de modale).
+- **Screen 8 (reveal) — mode croix depuis récap** : flèche gauche → récap (9), clic carte → ouvre modale texte
+- **Screen 9 (récap croix)** : pas de flèche gauche, "Nouveau tirage" → choix tirage (4), clic carte → détail (8)
+- **Screen 10 (croix-anim)** : pas de navbar. Auto-avance après ~2.7s vers chiffre (6) si position < 5, ou récap (9) si position = 5.
+- **Bouton home (navbar)** : retour à l'accueil (0) + scroll top de la liste des cartes + `clearTimeout(croixAnimTimeoutId)`
 
 ## Flux tirage une-carte (screens 4 → 8)
 
@@ -74,21 +77,25 @@ Home → [Consulter l'oracle] → Choix tirage (4)
 - `drawTirageCard()` : tirage cryptographique via `crypto.getRandomValues`, stocké dans `tirageCardId`
 - `playSound('belline')` joué à l'arrivée sur l'écran 8
 
-## Flux tirage en croix (screens 4 → 6/7/8 × 5 → 9)
+## Flux tirage en croix (screens 4 → 6/7/10 × 5 → 9)
 
 ```
 Choix tirage (4) → [Tirage en croix] → Chiffre (6) [position 1]
-→ goTo(7/8) → [flèche droite] → Chiffre (6) [position 2] → ...
-→ après position 5 : renderCroixRecap() → goTo(9)
-→ clic carte sur récap → goTo(8) [détail avec texte]
+→ drawCroixCard(n)
+→ si n = 1 : renderCroixAnim() → goTo(10)
+→ si n ≥ 2 : goTo(7) → playTcAnim(n-1, cb) → renderCroixAnim() → goTo(10)
+→ Screen 10 : spring animation + son belline → auto-avance après ~2.7s
+  → position < 5 : croixPosition++ → goTo(6)
+  → position = 5 : renderCroixRecap() → goTo(9)
+→ clic carte sur récap → croixFromRecap = true → renderTirageReveal() → goTo(8)
 → flèche gauche → goTo(9) [retour récap]
 ```
 
 - `shuffleCroixDeck()` : Fisher-Yates avec `crypto.getRandomValues`, 53 cartes → `croixDeck`
 - `drawCroixCard(n)` : `splice(0, n-1)` pour écarter, `splice(0, 1)[0]` pour tirer — garantit l'absence de doublons
 - Texte affiché : h3 à l'index `4 + croixPosition` (indices 5–9 du fichier .md)
-- Pendant le tirage séquentiel (positions 1–5) : **texte masqué** sur screen 8, visible uniquement depuis le récap (`croixFromRecap = true`)
-- `playSound('belline')` joué pendant le tirage séquentiel, `playSound('click')` depuis le récap
+- Screen 8 en mode croix séquentiel : **plus visité** — remplacé par screen 10. Accessible uniquement depuis le récap (`croixFromRecap = true`)
+- `playSound('belline')` joué au déclenchement du spring sur screen 10, `playSound('click')` depuis le récap
 
 ## Conventions CSS importantes
 
@@ -132,13 +139,32 @@ Format header : `[planet-color-square] [NOM PLANÈTE en couleur] N / Nom de la c
 
 ## Révélation (screen 8) — préfixe CSS `reveal-*`
 
-- `.reveal-card-wrapper` : `flex: 1; min-height: 0` — prend l'espace restant, contient l'image
-- `.reveal-card-img` : `max-height: 100%; width: auto; max-width: 100%` — s'adapte sans crop ni bandes blanches. Cursor `pointer` en mode croix (géré via JS dans `updateRevealNavbar`)
-- `.reveal-croix-position` : titre de position (ex. "Situation actuelle") affiché en mode croix uniquement, au-dessus du texte
+- `.reveal-card-wrapper` : `flex: 1; min-height: 0` — prend tout l'espace disponible, contient l'image
+- `.reveal-card-img` : `max-height: 100%; width: auto; max-width: 100%` — s'adapte sans crop ni bandes blanches. Cursor toujours `pointer`.
+- `.reveal-croix-position` : titre de position (ex. "Situation actuelle") affiché en mode croix uniquement
 - Animation d'entrée : `@keyframes reveal-flip-in` (scaleX 0→1, 0.45s ease-out) via classe `.flip-in`, re-déclenchée à chaque tirage
-- Texte : premier `<p>` après le `<h3>` correspondant — domaine (indices 0–4) en mode une-carte, position croix (indices 5–9) en mode croix
+- **Texte** : stocké dans `revealTextContent` (variable JS), affiché dans `#modal-reveal-text` au tap de la carte. Non affiché en mode croix séquentiel.
 - `updateRevealNavbar()` : gère `style.visibility` + `disabled` sur les 3 boutons selon le mode (une-carte / croix-actif / croix-depuis-récap)
 - Fichiers book fetchés : `./assets/data/book/${currentLang}/${cardId}.md`
+
+## Modale texte reveal (`#modal-reveal-text`)
+
+- `modal-overlay modal-centered` — centrée, même pattern que `modal-settings`
+- Ouverte par `openRevealTextModal()` au tap de la carte en mode une-carte ou `croixFromRecap`
+- Fermée par `closeRevealTextModal()` au tap n'importe où sur la modale (overlay ou sheet)
+- `cursor: pointer` sur toute la modale
+- Contenu : `.modal-body.reveal-modal-body` (DM Sans 16px, line-height 1.5)
+
+## Animation croix (screen 10) — préfixe CSS `croix-anim-*`
+
+- `#s-tirage-croix-anim` : pas de navbar, `overflow: hidden`
+- `renderCroixAnim()` : construit une grille 3×3 avec 5 cellules `data-pos="1"` à `data-pos="5"` :
+  - pos < croixPosition → image de la carte (déjà tirées)
+  - pos = croixPosition → image + classe `.spring-pending` (invisible) → spring déclenché à 400ms
+  - pos > croixPosition → `.placeholder` (bordure pointillée, fond transparent, pas d'ombre)
+- Timing : 400ms délai → spring 0.9s → 1300ms pause → auto-avance
+- `croixAnimTimeoutId` : référence au timeout courant, annulé par le bouton home
+- Positions grille (identiques screen 9) : pos1→2/1, pos2→2/3, pos3→1/2, pos4→3/2, pos5→2/2
 
 ## Récap tirage en croix (screen 9)
 
@@ -146,6 +172,7 @@ Format header : `[planet-color-square] [NOM PLANÈTE en couleur] N / Nom de la c
 - Layout CSS Grid 3×3 avec positions fixes via `data-pos` + `grid-area` :
   - pos 1 (Situation) → 2/1, pos 2 (Opposition) → 2/3, pos 3 (Conseil) → 1/2, pos 4 (Résultat) → 3/2, pos 5 (Synthèse) → 2/2
 - Cartes : ombre portée `box-shadow`, pas de border, `border-radius: min(2vw, 10px)`
+- Navbar : pas de flèche gauche — "Nouveau tirage" centré entre deux `.nav-spacer`, ramène au choix tirage (4)
 - Clic carte → `croixFromRecap = true`, `renderTirageReveal()`, `goTo(8, 'forward')`
 - `switchLang()` re-rend le récap si `currentScreen === 9 && croixCards.length === 5`
 
@@ -163,6 +190,8 @@ Format header : `[planet-color-square] [NOM PLANÈTE en couleur] N / Nom de la c
 - `croixCards` : tableau des 5 IDs de cartes tirées
 - `croixDeck` : deck restant après shuffle (évite les doublons)
 - `croixFromRecap` : `true` quand on navigue vers screen 8 depuis le récap
+- `croixAnimTimeoutId` : ID du setTimeout courant sur screen 10 (annulable)
+- `revealTextContent` : texte de lecture stocké lors du fetch, affiché dans la modale au tap
 
 ## Données cartes
 
