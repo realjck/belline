@@ -216,8 +216,10 @@ function applyTheme() {
   const root = document.documentElement;
   if (currentTheme === 'dark') {
     root.classList.add('dark');
+    dom.btTheme.innerHTML = '&#9728;';
   } else {
     root.classList.remove('dark');
+    dom.btTheme.innerHTML = '&#9790;';
   }
 }
 
