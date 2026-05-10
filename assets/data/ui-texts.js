@@ -56,7 +56,7 @@ const UI_TEXTS = {
 
     // Info modal
     'info-title': 'À propos',
-    'info-version': 'Version 0.2.0',
+    'info-version': 'Version 0.3.0',
     'info-text': 'L\'Oracle de Belline est une application compagnon pour explorer les 53 cartes de l\'Oracle de Belline. Chaque carte porte une signification particulière, idéale pour la consultation et la méditation.'
   },
 
@@ -117,7 +117,7 @@ const UI_TEXTS = {
 
     // Info modal
     'info-title': 'About',
-    'info-version': 'Version 0.2.0',
+    'info-version': 'Version 0.3.0',
     'info-text': 'Belline Oracle is a companion app to explore the 53 cards of the Belline Oracle. Each card carries particular significance, ideal for consultation and meditation.'
   }
 };
