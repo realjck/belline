@@ -19,6 +19,7 @@ let croixPosition = 1;          // 1–5
 let croixCards = [];            // drawn card ID per position
 let croixDeck = [];             // remaining shuffled deck
 let croixFromRecap = false;     // true when viewing detail from recap screen
+let croixAnimTimeoutId = null;
 const H3_SYMBOLS = ['♡', '⌬', '❖', 'ᗑ', '☸︎'];
 
 const screenMap = {
@@ -115,6 +116,7 @@ function cacheDOM() {
   dom.croixRecapSubtitle = document.getElementById('croix-recap-subtitle');
   dom.arrCroixRecapBack = document.getElementById('arr-croix-recap-back');
   dom.btCroixNouveauTirage = document.getElementById('bt-croix-nouveau-tirage');
+  dom.croixAnimGrid = document.getElementById('croix-anim-grid');
 }
 
 // ──── INITIALIZATION ────
@@ -964,6 +966,48 @@ function renderCroixRecap() {
 
     dom.croixGrid.appendChild(cell);
   }
+}
+
+function renderCroixAnim() {
+  dom.croixAnimGrid.innerHTML = '';
+
+  for (let pos = 1; pos <= 5; pos++) {
+    const cell = document.createElement('div');
+    cell.className = 'croix-anim-cell';
+    cell.dataset.pos = String(pos);
+
+    if (pos <= croixPosition) {
+      const cardId = croixCards[pos - 1];
+      const img = document.createElement('img');
+      img.src = ALL_CARDS[cardId].imageUrl;
+      img.alt = getCardName(cardId, currentLang);
+      cell.appendChild(img);
+    } else {
+      cell.classList.add('placeholder');
+    }
+
+    dom.croixAnimGrid.appendChild(cell);
+  }
+
+  // 400ms: safely after the 350ms screen transition, so spring starts when Screen 10 is fully visible
+  croixAnimTimeoutId = setTimeout(() => {
+    const currentCell = dom.croixAnimGrid.querySelector(`.croix-anim-cell[data-pos="${croixPosition}"]`);
+    if (currentCell) {
+      currentCell.classList.add('spring-in');
+      playSound('belline');
+    }
+
+    croixAnimTimeoutId = setTimeout(() => {
+      if (croixPosition < 5) {
+        croixPosition++;
+        updateCroixPositionTitle();
+        goTo(6, 'forward');
+      } else {
+        renderCroixRecap();
+        goTo(9, 'forward');
+      }
+    }, 900 + 1800);
+  }, 400);
 }
 
 // ──── BOOTSTRAP ────
