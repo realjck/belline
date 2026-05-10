@@ -31,7 +31,8 @@ const screenMap = {
   6: 's-tirage-chiffre',
   7: 's-tirage-anim',
   8: 's-tirage-reveal',
-  9: 's-tirage-croix-recap'
+  9: 's-tirage-croix-recap',
+  10: 's-tirage-croix-anim'
 };
 
 // ──── DOM ELEMENT CACHE ────
