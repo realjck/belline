@@ -1492,6 +1492,8 @@ p {
   border-radius: min(2vw, 10px);
   opacity: 0.5;
   overflow: visible;
+  background: transparent;
+  box-shadow: none;
 }
 
 .croix-anim-cell.spring-pending {
