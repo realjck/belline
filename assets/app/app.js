@@ -977,12 +977,19 @@ function renderCroixAnim() {
     cell.className = 'croix-anim-cell';
     cell.dataset.pos = String(pos);
 
-    if (pos <= croixPosition) {
+    if (pos < croixPosition) {
       const cardId = croixCards[pos - 1];
       const img = document.createElement('img');
       img.src = ALL_CARDS[cardId].imageUrl;
       img.alt = getCardName(cardId, currentLang);
       cell.appendChild(img);
+    } else if (pos === croixPosition) {
+      const cardId = croixCards[pos - 1];
+      const img = document.createElement('img');
+      img.src = ALL_CARDS[cardId].imageUrl;
+      img.alt = getCardName(cardId, currentLang);
+      cell.appendChild(img);
+      cell.classList.add('spring-pending');
     } else {
       cell.classList.add('placeholder');
     }
@@ -994,6 +1001,7 @@ function renderCroixAnim() {
   croixAnimTimeoutId = setTimeout(() => {
     const currentCell = dom.croixAnimGrid.querySelector(`.croix-anim-cell[data-pos="${croixPosition}"]`);
     if (currentCell) {
+      currentCell.classList.remove('spring-pending');
       currentCell.classList.add('spring-in');
       playSound('belline');
     }

@@ -1494,6 +1494,11 @@ p {
   overflow: visible;
 }
 
+.croix-anim-cell.spring-pending {
+  opacity: 0;
+  transform: scale(0);
+}
+
 .croix-anim-cell.spring-in {
   animation: croix-spring-in 0.9s ease-out forwards;
   transform-origin: center;
