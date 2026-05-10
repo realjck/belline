@@ -1007,7 +1007,7 @@ function renderCroixAnim() {
         renderCroixRecap();
         goTo(9, 'forward');
       }
-    }, 400 + 1800);
+    }, 900 + 1300);
   }, 400);
 }
 
