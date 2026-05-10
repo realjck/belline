@@ -20,6 +20,7 @@ let croixCards = [];            // drawn card ID per position
 let croixDeck = [];             // remaining shuffled deck
 let croixFromRecap = false;     // true when viewing detail from recap screen
 let croixAnimTimeoutId = null;
+let revealTextContent = '';
 const H3_SYMBOLS = ['♡', '⌬', '❖', 'ᗑ', '☸︎'];
 
 const screenMap = {
@@ -105,7 +106,8 @@ function cacheDOM() {
   dom.tirageNumbers = document.getElementById('tirage-numbers');
   dom.revealHeader = document.getElementById('reveal-header');
   dom.revealCardImg = document.getElementById('reveal-card-img');
-  dom.revealText = document.getElementById('reveal-text');
+  dom.modalRevealText = document.getElementById('modal-reveal-text');
+  dom.modalRevealTextBody = document.getElementById('modal-reveal-text-body');
   dom.arrRevealBack = document.getElementById('arr-reveal-back');
   dom.btNouveauTirage = document.getElementById('bt-nouveau-tirage');
   dom.revealCroixPosition = document.getElementById('reveal-croix-position');
@@ -720,13 +722,18 @@ function setupEventListeners() {
   dom.btNouveauTirage.addEventListener('click', () => { goTo(5); playSound('click'); });
 
   dom.revealCardImg.addEventListener('click', () => {
-    if (tirageMode !== 'croix') return;
-    if (!dom.arrRevealNext.disabled) {
-      dom.arrRevealNext.click();
-    } else if (!dom.arrRevealBack.disabled) {
-      dom.arrRevealBack.click();
+    if (tirageMode === 'une-carte' || croixFromRecap) {
+      openRevealTextModal();
+    } else {
+      if (!dom.arrRevealNext.disabled) {
+        dom.arrRevealNext.click();
+      } else if (!dom.arrRevealBack.disabled) {
+        dom.arrRevealBack.click();
+      }
     }
   });
+
+  dom.modalRevealText.addEventListener('click', closeRevealTextModal);
 
   // Screen 9 — Croix recap
   dom.arrCroixRecapBack.addEventListener('click', () => {
@@ -892,9 +899,9 @@ async function renderTirageReveal() {
       while (sib && sib.tagName !== 'P') sib = sib.nextElementSibling;
       if (sib) text = sib.textContent;
     }
-    dom.revealText.textContent = (tirageMode === 'croix' && !croixFromRecap) ? '' : text;
+    revealTextContent = (tirageMode === 'croix' && !croixFromRecap) ? '' : text;
   } catch {
-    dom.revealText.textContent = '';
+    revealTextContent = '';
   }
 
   if (tirageMode === 'croix') {
@@ -930,7 +937,19 @@ function updateRevealNavbar() {
     dom.arrRevealNext.style.visibility = 'visible';
     dom.arrRevealNext.disabled = false;
   }
-  dom.revealCardImg.style.cursor = tirageMode === 'croix' ? 'pointer' : 'default';
+  dom.revealCardImg.style.cursor = 'pointer';
+}
+
+function openRevealTextModal() {
+  dom.modalRevealTextBody.textContent = revealTextContent;
+  dom.modalRevealText.classList.add('active');
+}
+
+function closeRevealTextModal() {
+  dom.modalRevealText.classList.add('closing');
+  setTimeout(() => {
+    dom.modalRevealText.classList.remove('active', 'closing');
+  }, 300);
 }
 
 function renderCroixRecap() {

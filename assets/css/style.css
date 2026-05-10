@@ -1106,13 +1106,17 @@ p {
   padding-bottom: 4px;
 }
 
-.reveal-text {
+.reveal-modal-body {
   font-family: 'DM Sans', sans-serif;
-  font-size: 18px;
-  color: var(--color-text);
-  text-align: left;
-  line-height: 1.4;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 8px 0 16px;
 }
+
+#modal-reveal-text {
+  cursor: pointer;
+}
+
 
 /* 3-column grid nav for reveal screen — keeps layout stable across modes */
 .reveal-bottom-nav {
