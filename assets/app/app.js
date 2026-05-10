@@ -5,7 +5,7 @@
 
 // ──── STATE MANAGEMENT ────
 
-let currentLang = 'fr';
+let currentLang = (navigator.languages?.[0] || navigator.language || '').toLowerCase().startsWith('fr') ? 'fr' : 'en';
 let currentTheme = 'light';
 let soundEnabled = true;
 let currentScreen = 0;
@@ -135,9 +135,7 @@ function init() {
 
 function loadPreferences() {
   const savedLang = localStorage.getItem('Belline_lang');
-  if (savedLang) {
-    currentLang = savedLang;
-  }
+  if (savedLang) currentLang = savedLang;
 
   const savedTheme = localStorage.getItem('Belline_theme');
   if (savedTheme) {
