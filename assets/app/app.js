@@ -533,6 +533,7 @@ function setupEventListeners() {
   dom.btHome.addEventListener('click', () => {
     tirageMode = 'une-carte';
     tcAnimCancelled = true;
+    clearTimeout(croixAnimTimeoutId);
     dom.cardsGallery.scrollTop = 0;
     goTo(0);
     playSound('back');
@@ -673,13 +674,13 @@ function setupEventListeners() {
     if (tirageMode === 'croix') {
       drawCroixCard(currentNumber);
       if (currentNumber === 1) {
-        renderTirageReveal().then(() => { playSound('belline'); goTo(8, 'forward'); });
+        renderCroixAnim();
+        goTo(10, 'forward');
       } else {
         goTo(7, 'forward');
-        playTcAnim(currentNumber - 1, async () => {
-          await renderTirageReveal();
-          playSound('belline');
-          goTo(8, 'forward');
+        playTcAnim(currentNumber - 1, () => {
+          renderCroixAnim();
+          goTo(10, 'forward');
         });
       }
     } else {
