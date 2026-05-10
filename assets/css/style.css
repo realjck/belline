@@ -1495,7 +1495,7 @@ p {
 }
 
 .croix-anim-cell.spring-in {
-  animation: croix-spring-in 0.9s ease-out forwards;
+  animation: croix-spring-in 0.4s ease-out forwards;
   transform-origin: center;
   position: relative;
   z-index: 10;
