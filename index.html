@@ -9,13 +9,19 @@
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://belline.pxly.fr">
   <meta property="og:title"       content="Belline Oracle - Card Reading Companion">
   <meta property="og:description" content="The Belline Oracle app is your digital companion for card readings using the Belline deck.">
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary">
+  <meta name="twitter:url"         content="https://belline.pxly.fr">
   <meta name="twitter:title"       content="Belline Oracle - Card Reading Companion">
   <meta name="twitter:description" content="The Belline Oracle app is your digital companion for card readings using the Belline deck.">
+  <meta name="twitter:image"       content="https://belline.pxly.fr/assets/images/belline-logo.png">
+
+  <link rel="shortcut icon" sizes="192x192" href="./assets/images/favicon.png">
+  <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -376,6 +382,10 @@
 <script src="./assets/data/ui-texts.js"></script>
 <script src="./assets/data/belline-cards.js"></script>
 <script src="./assets/app/app.js"></script>
-
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js?' + Date.now());
+  }
+</script>
 </body>
 </html>

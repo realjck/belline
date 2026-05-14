@@ -1,8 +1,34 @@
 {
-  "name": "Oracle de Belline",
   "short_name": "Belline",
-  "start_url": "./",
-  "display": "standalone",
+  "name": "Belline Oracle - Card Reading Companion",
+  "icons": [
+    {
+      "src": "./assets/images/favicon_512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/images/favicon.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    }
+  ],
+  "id": "/",
+  "start_url": "https://belline.pxly.fr",
+  "scope": "https://belline.pxly.fr",
+  "description": "The Belline Oracle app is your digital companion for card readings using the Belline deck.",
+  "theme_color": "#7a5c3a",
   "background_color": "#f5efe6",
-  "theme_color": "#7a5c3a"
+  "display": "standalone",
+  "dir": "ltr",
+  "lang": "en",
+  "orientation": "portrait",
+  "categories": [
+    "books",
+    "education",
+    "entertainment",
+    "lifestyle"
+  ]
 }

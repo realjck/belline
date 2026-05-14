@@ -1,0 +1,9 @@
+{
+  "name": "belline",
+  "dependencies": {
+    "workbox-cli": "^7.0.0"
+  },
+  "scripts": {
+    "pwa": "npx workbox generateSW workbox-config.js"
+  }
+}

@@ -24,3 +24,6 @@ Thumbs.db
 # Local env
 .env.local
 *.log
+
+workbox-86637ee2.js
+workbox-86637ee2.js.map
