@@ -22,6 +22,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@100..900&family=DM+Sans:ital,opsz,wght@0,9..40,100..900;1,9..40,100..900&display=swap" rel="stylesheet">
   <link href="./assets/css/style.css" rel="stylesheet">
   <link rel="manifest" href="./manifest.json">
+  <script>(function(){var t=localStorage.getItem('Belline_theme');if(t==='dark')document.documentElement.classList.add('dark')})();</script>
 </head>
 <body>
 
@@ -310,6 +311,51 @@
   <div class="modal-overlay modal-centered" id="modal-reveal-text">
     <div class="modal-sheet">
       <div class="modal-body reveal-modal-body" id="modal-reveal-text-body"></div>
+    </div>
+  </div>
+
+  <!-- ── Preload screen ── -->
+  <div id="preload-screen">
+    <div class="tirage-anim">
+      <div class="ta-disc"></div>
+      <div class="ta-ticks" id="preload-ta-ticks"></div>
+      <div class="ta-ring ta-r3"></div>
+      <div class="ta-ring ta-r2"></div>
+      <div class="ta-ring ta-r1"></div>
+      <div class="ta-orbit ta-sun">
+        <div class="ta-body">
+          <div class="ta-sun-icon">
+            <div class="ta-core"></div>
+            <div class="ta-ray"></div>
+            <div class="ta-ray"></div>
+            <div class="ta-ray"></div>
+            <div class="ta-ray"></div>
+          </div>
+        </div>
+      </div>
+      <div class="ta-orbit ta-moon">
+        <div class="ta-body">
+          <div class="ta-moon-icon"></div>
+        </div>
+      </div>
+      <div class="ta-orbit ta-star" style="--ta-dur:1.75s; --ta-dir:normal; --ta-r:var(--ta-orbit-1);">
+        <div class="ta-body"><div class="ta-star-icon" style="--ta-s:9px;"></div></div>
+      </div>
+      <div class="ta-orbit ta-star" style="--ta-dur:1.75s; --ta-dir:normal; --ta-r:var(--ta-orbit-1); animation-delay:-0.875s;">
+        <div class="ta-body" style="animation-delay:-0.875s;"><div class="ta-star-icon" style="--ta-s:7px;"></div></div>
+      </div>
+      <div class="ta-orbit ta-star" style="--ta-dur:3.5s; --ta-dir:reverse; --ta-r:var(--ta-orbit-3); animation-delay:-0.5s;">
+        <div class="ta-body" style="animation-delay:-0.5s;"><div class="ta-star-icon" style="--ta-s:8px;"></div></div>
+      </div>
+      <div class="ta-orbit ta-star" style="--ta-dur:3.5s; --ta-dir:reverse; --ta-r:var(--ta-orbit-3); animation-delay:-2s;">
+        <div class="ta-body" style="animation-delay:-2s;"><div class="ta-star-icon" style="--ta-s:6px;"></div></div>
+      </div>
+      <div class="ta-orbit ta-star" style="--ta-dur:3.5s; --ta-dir:reverse; --ta-r:var(--ta-orbit-3); animation-delay:-2.75s;">
+        <div class="ta-body" style="animation-delay:-2.75s;"><div class="ta-star-icon" style="--ta-s:7px;"></div></div>
+      </div>
+    </div>
+    <div class="preload-progress">
+      <div class="preload-progress-fill" id="preload-progress-fill"></div>
     </div>
   </div>
 

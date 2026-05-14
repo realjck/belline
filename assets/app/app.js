@@ -3,6 +3,12 @@
  * Handles state management, navigation, rendering, and user interactions
  */
 
+// Apply saved theme before first paint to avoid flash
+(function () {
+  const t = localStorage.getItem('Belline_theme');
+  if (t === 'dark') document.documentElement.classList.add('dark');
+}());
+
 // ──── STATE MANAGEMENT ────
 
 let currentLang = (navigator.languages?.[0] || navigator.language || '').toLowerCase().startsWith('fr') ? 'fr' : 'en';
@@ -753,9 +759,8 @@ function setupEventListeners() {
 
 // ──── TIRAGE ANIMATION ────
 
-function initTirageAnimation() {
-  const ticks = document.getElementById('ta-ticks');
-  if (!ticks) return;
+function initTicks(el) {
+  if (!el) return;
   const N = 24;
   for (let i = 0; i < N; i++) {
     const tick = document.createElement('i');
@@ -765,8 +770,12 @@ function initTirageAnimation() {
       tick.style.height = '10px';
       tick.style.width = '2.5px';
     }
-    ticks.appendChild(tick);
+    el.appendChild(tick);
   }
+}
+
+function initTirageAnimation() {
+  initTicks(document.getElementById('ta-ticks'));
 }
 
 // ──── TIRAGE CARD DRAW ────
@@ -1078,6 +1087,48 @@ function renderCroixAnim() {
   }, 400);
 }
 
+// ──── PRELOAD ────
+
+function preloadAssets() {
+  const imageUrls = ALL_CARDS.map(c => c.imageUrl);
+  imageUrls.push('./assets/images/belline-logo.png');
+
+  const total = imageUrls.length;
+  let loaded = 0;
+  const fill = document.getElementById('preload-progress-fill');
+
+  const promises = imageUrls.map(url => new Promise(resolve => {
+    const img = new Image();
+    img.onload = img.onerror = () => {
+      loaded++;
+      if (fill) fill.style.width = `${Math.round((loaded / total) * 100)}%`;
+      resolve();
+    };
+    img.src = url;
+  }));
+
+  ['./assets/sounds/click.mp3', './assets/sounds/back.mp3', './assets/sounds/belline.mp3'].forEach(url => {
+    const a = new Audio();
+    a.preload = 'auto';
+    a.src = url;
+  });
+
+  return Promise.all(promises);
+}
+
+function hidePreloadScreen() {
+  const el = document.getElementById('preload-screen');
+  if (!el) return;
+  el.classList.add('fade-out');
+  setTimeout(() => el.remove(), 500);
+}
+
 // ──── BOOTSTRAP ────
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+  initTicks(document.getElementById('preload-ta-ticks'));
+  preloadAssets().then(() => {
+    hidePreloadScreen();
+    init();
+  });
+});
