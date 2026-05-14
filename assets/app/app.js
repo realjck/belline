@@ -118,6 +118,10 @@ function cacheDOM() {
   dom.croixRecapSubtitle = document.getElementById('croix-recap-subtitle');
   dom.btCroixNouveauTirage = document.getElementById('bt-croix-nouveau-tirage');
   dom.croixAnimGrid = document.getElementById('croix-anim-grid');
+  dom.modalCroixCardText = document.getElementById('modal-croix-card-text');
+  dom.croixModalCardHeader = document.getElementById('croix-modal-card-header');
+  dom.croixModalPositionTitle = document.getElementById('croix-modal-position-title');
+  dom.croixModalBody = document.getElementById('croix-modal-body');
 }
 
 // ──── INITIALIZATION ────
@@ -610,6 +614,9 @@ function setupEventListeners() {
       if (dom.modalInfo.classList.contains('active')) {
         closeInfoModal();
       }
+      if (dom.modalCroixCardText.classList.contains('active')) {
+        closeCroixCardModal();
+      }
     }
   });
 
@@ -733,6 +740,7 @@ function setupEventListeners() {
   });
 
   dom.modalRevealText.addEventListener('click', closeRevealTextModal);
+  dom.modalCroixCardText.addEventListener('click', closeCroixCardModal);
 
   // Screen 9 — Croix recap
   dom.btCroixNouveauTirage.addEventListener('click', () => {
@@ -944,6 +952,51 @@ function closeRevealTextModal() {
   }, 300);
 }
 
+async function openCroixCardModal(cardId, pos) {
+  const groupName = getGroupNameForCardId(cardId);
+  const groupColor = getGroupColor(groupName);
+  const groupSymbol = getGroupSymbol(groupName);
+  const cardName = getCardName(cardId, currentLang);
+  const groupLabel = groupName ? txt(`group-${groupName}`) : '';
+  const square = groupColor
+    ? `<span class="planet-color-square" style="background:${groupColor}">${groupSymbol || ''}</span>`
+    : '';
+  const label = groupLabel
+    ? `<span style="color:${groupColor}">${groupLabel}</span>`
+    : '';
+  dom.croixModalCardHeader.innerHTML = [square, label, `${cardId} / ${cardName}`].filter(Boolean).join(' ');
+  dom.croixModalPositionTitle.textContent = txt(`reveal-croix-pos-${pos}`);
+
+  const h3Index = 4 + pos;
+  const cardIdStr = String(cardId).padStart(2, '0');
+  let text = '';
+  try {
+    const r = await fetch(`./assets/data/book/${currentLang}/${cardIdStr}.md`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const md = await r.text();
+    const tmp = document.createElement('div');
+    tmp.innerHTML = marked.parse(md);
+    const h3s = tmp.querySelectorAll('h3');
+    const targetH3 = h3s[h3Index];
+    if (targetH3) {
+      let sib = targetH3.nextElementSibling;
+      while (sib && sib.tagName !== 'P') sib = sib.nextElementSibling;
+      if (sib) text = sib.textContent;
+    }
+  } catch {
+    text = '';
+  }
+  dom.croixModalBody.textContent = text;
+  dom.modalCroixCardText.classList.add('active');
+}
+
+function closeCroixCardModal() {
+  dom.modalCroixCardText.classList.add('closing');
+  setTimeout(() => {
+    dom.modalCroixCardText.classList.remove('active', 'closing');
+  }, 300);
+}
+
 function renderCroixRecap() {
   dom.croixRecapTitle.textContent = txt('croix-recap-title');
   dom.croixGrid.innerHTML = '';
@@ -967,13 +1020,8 @@ function renderCroixRecap() {
     cell.appendChild(label);
 
     cell.addEventListener('click', () => {
-      tirageCardId = cardId;
-      croixPosition = pos;
-      croixFromRecap = true;
-      renderTirageReveal().then(() => {
-        playSound('click');
-        goTo(8, 'forward');
-      });
+      openCroixCardModal(cardId, pos);
+      playSound('click');
     });
 
     dom.croixGrid.appendChild(cell);

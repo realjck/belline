@@ -1117,6 +1117,46 @@ p {
   cursor: pointer;
 }
 
+.croix-modal-card-header {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(17px, 4.2vw, 22px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding-bottom: 3px;
+}
+
+.croix-modal-position-title {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: clamp(14px, 3.5vw, 17px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  text-align: center;
+  padding-bottom: 0;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 2px;
+}
+
+.croix-modal-body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: left;
+  padding: 8px 0 16px;
+}
+
+#modal-croix-card-text {
+  cursor: pointer;
+}
+
 
 /* 3-column grid nav for reveal screen — keeps layout stable across modes */
 .reveal-bottom-nav {
